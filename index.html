@@ -98,6 +98,7 @@ body{font-family:'Inter',sans-serif;background:#ffffff;color:var(--text);overflo
   background:radial-gradient(circle,rgba(139,92,246,0.3) 0%,transparent 65%);border-radius:50%;}
 
 @keyframes sunGlow{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+@keyframes spinSun{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
 
 /* Grid lines overlay on all slides */
 .hero-slide::after{content:'';position:absolute;inset:0;
@@ -772,7 +773,8 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey&&(e.key==='u'||e.key==='s'|
   </div>
   <div class="nav-main">
     <a class="logo" href="#" onclick="showSection('home')">
-      ☀️ <span>Eco</span>Sun Energy
+      <span style="font-size:42px;display:inline-block;animation:spinSun 5s linear infinite;line-height:1;">☀️</span>
+      <span><span>Eco</span>Sun Energy</span>
     </a>
     <div class="search-bar">
       <input type="text" id="searchInput" placeholder="Solar panel, water heater, products खोजें..." oninput="searchProducts(this.value)">
