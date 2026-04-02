@@ -164,20 +164,32 @@ body{font-family:'Inter',sans-serif;background:#ffffff;color:var(--text);overflo
 .hero-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.35);cursor:pointer;transition:all 0.3s;}
 .hero-dot.active{background:var(--orange);width:24px;border-radius:4px;}
 
-@media(max-width:900px){.hero-visual{display:none;}.hero-slider{height:70vh;min-height:420px;}.hero-slide{padding:0 24px;}}
-@media(max-width:768px){
-  .hero-content h1{font-size:clamp(26px,6vw,40px);}
+@media(max-width:900px){
+  /* Hide 3kW, Subsidy, 5kW columns on mobile */
+  .hero-inner > div:not(.hero-content){display:none !important;}
+  .hero-slider{height:auto;min-height:auto;max-height:none;}
+  .hero-slide{padding:28px 20px;position:relative;height:auto;min-height:calc(100vh - 112px);}
+  .hero-inner{flex-direction:column;align-items:flex-start;gap:0;justify-content:flex-start;}
+  .hero-content{max-width:100%;width:100%;}
+  .hero-content h1{font-size:clamp(28px,7vw,44px);}
   .hero-stats{gap:20px;}
   .hstat-num{font-size:22px;}
-  .nav-main{padding:8px 16px;}
+  .hero-btns{flex-direction:row;flex-wrap:wrap;}
+  .hero-btn{font-size:13px;padding:12px 22px;}
+  .hero-social{margin-top:16px;gap:10px;}
+  .social-icon-btn{width:38px;height:38px;}
+}
+@media(max-width:768px){
+  .nav-main{padding:8px 14px;}
   .stats-bar{grid-template-columns:1fr 1fr;}
   .section{padding:30px 16px;}
 }
 @media(max-width:480px){
   .products-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
-  .hero-slider{height:85vh;min-height:400px;}
-  .hero-btns{flex-direction:column;}
-  .hero-btn{text-align:center;}
+  .hero-content h1{font-size:clamp(24px,7vw,36px);}
+  .hero-stats{gap:14px;}
+  .hstat-num{font-size:18px;}
+  .hero-btn{font-size:12px;padding:10px 16px;}
 }
 
 /* ============ HOME SECTION NEW COMPONENTS ============ */
