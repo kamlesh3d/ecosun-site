@@ -165,22 +165,24 @@ body{font-family:'Inter',sans-serif;background:#ffffff;color:var(--text);overflo
 .hero-dot.active{background:var(--orange);width:24px;border-radius:4px;}
 
 @media(max-width:900px){
-  /* Hide 3kW, Subsidy, 5kW columns on mobile */
-  .hero-inner > div:not(.hero-content){display:none !important;}
-  .hero-slider{height:auto;min-height:auto;max-height:none;}
-  .hero-slide{padding:28px 20px;height:auto;min-height:calc(100vh - 112px);display:flex;align-items:center;}
-  .hero-inner{flex-direction:column;align-items:flex-start;gap:0;justify-content:flex-start;}
-  .hero-content{max-width:100%;width:100%;}
-  .hero-content h1{font-size:clamp(26px,7vw,42px);}
-  .hero-stats{gap:18px;}
-  .hstat-num{font-size:20px;}
-  .hero-btns{flex-direction:row;flex-wrap:wrap;}
-  .hero-btn{font-size:13px;padding:11px 20px;}
-  .hero-social{margin-top:16px;gap:10px;}
-  .social-icon-btn{width:38px;height:38px;}
-  /* Stats bar — 2 columns on mobile */
-  .stats-bar{grid-template-columns:1fr 1fr;}
-  .stat-num{font-size:24px;}
+  /* Hide columns on mobile using class */
+  .hero-col{display:none !important;}
+  /* Fix hero slider for mobile */
+  .hero-slider{height:auto !important;min-height:auto !important;max-height:none !important;overflow:visible !important;}
+  .hero-slide{position:relative !important;height:auto !important;min-height:auto !important;opacity:1 !important;padding:32px 20px !important;display:none !important;}
+  .hero-slide.active{display:flex !important;opacity:1 !important;}
+  .hero-inner{flex-direction:column !important;align-items:flex-start !important;gap:0 !important;max-width:100% !important;}
+  .hero-content{max-width:100% !important;width:100% !important;}
+  .hero-content h1{font-size:clamp(26px,7vw,42px) !important;}
+  .hero-stats{gap:18px !important;}
+  .hstat-num{font-size:20px !important;}
+  .hero-btns{flex-direction:row !important;flex-wrap:wrap !important;}
+  .hero-btn{font-size:13px !important;padding:11px 20px !important;}
+  .hero-social{margin-top:16px !important;gap:10px !important;}
+  .social-icon-btn{width:38px !important;height:38px !important;}
+  .stats-bar{grid-template-columns:1fr 1fr !important;}
+  .stat-num{font-size:24px !important;}
+  .hero-dots{display:none !important;}
 }
 @media(max-width:768px){
   .nav-main{padding:8px 14px;}
@@ -990,7 +992,7 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey&&(e.key==='u'||e.key==='s'|
 
       <!-- CENTER: PM Surya Ghar Square Box -->
       <!-- COL 1: 3kW BOX -->
-      <div style="flex-shrink:0;width:min(190px,22%);background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:16px;overflow:hidden;animation:slideIn 0.6s ease both;animation-delay:0.1s;display:flex;flex-direction:column;">
+      <div class="hero-col" style="flex-shrink:0;width:min(190px,22%);background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:16px;overflow:hidden;animation:slideIn 0.6s ease both;animation-delay:0.1s;">
         <div style="background:rgba(255,85,0,0.2);padding:7px 12px;">
           <span style="color:#fbbf24;font-size:10px;font-weight:800;letter-spacing:0.5px;">☀ 3kW SOLAR SYSTEM</span>
         </div>
@@ -1013,7 +1015,7 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey&&(e.key==='u'||e.key==='s'|
       </div>
 
       <!-- COL 2: SUBSIDY BOX -->
-      <div onclick="showSection('schemes-section')" style="flex-shrink:0;width:min(130px,15%);background:rgba(34,197,94,0.12);border:2px solid rgba(34,197,94,0.55);border-radius:16px;padding:16px 12px;text-align:center;cursor:pointer;transition:all 0.3s;animation:slideIn 0.6s ease both;animation-delay:0.2s;display:flex;flex-direction:column;align-items:center;justify-content:center;" onmouseover="this.style.background='rgba(34,197,94,0.22)'" onmouseout="this.style.background='rgba(34,197,94,0.12)'">
+      <div class="hero-col" onclick="showSection('schemes-section')" style="flex-shrink:0;width:min(130px,15%);background:rgba(34,197,94,0.12);border:2px solid rgba(34,197,94,0.55);border-radius:16px;padding:16px 12px;text-align:center;cursor:pointer;transition:all 0.3s;animation:slideIn 0.6s ease both;animation-delay:0.2s;" onmouseover="this.style.background='rgba(34,197,94,0.22)'" onmouseout="this.style.background='rgba(34,197,94,0.12)'">
         <div style="font-size:30px;margin-bottom:8px;">🏛️</div>
         <div style="color:#4ade80;font-size:22px;font-weight:900;line-height:1;letter-spacing:-1px;">₹78,000</div>
         <div style="color:#4ade80;font-size:10px;font-weight:700;margin-top:3px;">तक Subsidy</div>
@@ -1023,7 +1025,7 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey&&(e.key==='u'||e.key==='s'|
       </div>
 
       <!-- COL 3: 5kW BOX -->
-      <div style="flex-shrink:0;width:min(190px,22%);background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:16px;overflow:hidden;animation:slideIn 0.6s ease both;animation-delay:0.3s;display:flex;flex-direction:column;">
+      <div class="hero-col" style="flex-shrink:0;width:min(190px,22%);background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:16px;overflow:hidden;animation:slideIn 0.6s ease both;animation-delay:0.3s;">
         <div style="background:rgba(255,85,0,0.2);padding:7px 12px;">
           <span style="color:#fbbf24;font-size:10px;font-weight:800;letter-spacing:0.5px;">⚡ 5kW SOLAR SYSTEM</span>
         </div>
