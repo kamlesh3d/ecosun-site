@@ -845,18 +845,15 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey&&(e.key==='u'||e.key==='s'|
     </div>
   </div>
   <div class="nav-links">
-    <a href="#" class="active" onclick="showSection('home')">🏠 Home</a>
-    <a href="#" onclick="showSection('solar-section')">☀️ Solar</a>
+    <a href="#" class="active" onclick="showSection('home')">☀️ Solar</a>
     <a href="#" onclick="showSection('mpeb-section')">⚡ MPEB</a>
     <a href="#" onclick="showSection('products-section')">🛍️ Products</a>
     <a href="#" onclick="showSection('partner-section')">🤝 Partner</a>
     <a href="#" onclick="showSection('edu-section')">📚 Education</a>
     <a href="#" onclick="showSection('games-section')">🎮 Games</a>
     <a href="#" onclick="showSection('ai-section')">🤖 AI Help</a>
-    <a href="#" onclick="showSection('skills-section')">💡 Life Skills</a>
     <a href="#" onclick="showSection('schemes-section')">🏛️ Govt Schemes</a>
     <a href="#" onclick="showSection('gallery-section')">📸 Gallery</a>
-    <a href="#" onclick="showSection('testimonials-section')">⭐ Reviews</a>
     <a href="#" onclick="showSection('blog-section')">📰 Blog</a>
     <a href="#" onclick="showSection('contact-section')">📋 Enquiry</a>
   </div>
@@ -2546,14 +2543,14 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey&&(e.key==='u'||e.key==='s'|
       <a href="#" onclick="selectClass(6)">Class 6-8 (Middle)</a>
       <a href="#" onclick="selectClass(9)">Class 9-10 (High)</a>
       <a href="#" onclick="selectClass(11)">Class 11-12 (Senior)</a>
-      <a href="#" onclick="showSection('skills-section')">Life Skills</a>
+      <a href="#" onclick="showSection('home')">☀️ Solar</a>
       <a href="#" onclick="showSection('games-section')">Games & Quiz</a>
     </div>
     <div class="footer-col">
       <h3>🏛️ More</h3>
       <a href="#" onclick="showSection('gallery-section')">📸 Project Gallery</a>
-      <a href="#" onclick="showSection('testimonials-section')">⭐ Customer Reviews</a>
-      <a href="#" onclick="showSection('blog-section')">📰 Blog & News</a>
+      <a href="#" onclick="showSection('blog-section')">📰 Blog</a>
+
       <a href="#" onclick="showSection('contact-section')">📋 Free Enquiry</a>
       <a href="https://pmsuryaghar.gov.in" target="_blank">🏛️ PM Surya Ghar</a>
       <a href="https://mnre.gov.in" target="_blank">🌿 KUSUM Yojana</a>
@@ -2574,7 +2571,7 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey&&(e.key==='u'||e.key==='s'|
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ============================================================
 // ECOSUN SUPERAPP - COMPLETE JAVASCRIPT ENGINE
 // ============================================================
@@ -4686,7 +4683,7 @@ console.log('EcoSun SuperApp loaded successfully! 🚀');
 </footer>
 
 <!-- JAVASCRIPT -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 function showTab(tab) {
   ['bijli','solar','dcr','jobs','govt','calculator'].forEach(t => {
     document.getElementById('tab-'+t).style.display = 'none';
@@ -5088,14 +5085,16 @@ function submitEnquiry() {
   const waText = `🌟 *EcoSun Energy — New Enquiry* 🌟\n\n👤 *Name:* ${name}\n📱 *Phone:* ${phone}\n📍 *Area:* ${city || 'Not specified'}\n🔆 *Interest:* ${service}\n\n📅 Date: ${new Date().toLocaleDateString('hi-IN')}`;
   showNotification('✅ WhatsApp खुल रहा है...', '#2e7d32');
   setTimeout(() => {
-    const waUrl = 'https://wa.me/919340509033?text=' + encodeURIComponent(waText);
-    const a = document.createElement('a');
-    a.href = waUrl;
-    a.target = '_blank';
-    a.rel = 'noopener';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    window.open('https://wa.me/919340509033?text=' + encodeURIComponent(waText), '_blank');
+    const box = document.getElementById('enquiryFormBox');
+    if (box) {
+      box.innerHTML = `<div style="text-align:center;padding:30px;">
+        <div style="font-size:64px;margin-bottom:15px;">🎉</div>
+        <h3 style="color:#2e7d32;margin-bottom:10px;">Enquiry Send हो गई!</h3>
+        <p style="color:#555;font-size:14px;line-height:1.7;">हमारी team 2-4 घंटे में आपसे contact करेगी।</p>
+        <button onclick="location.reload()" style="margin-top:15px;background:#2e7d32;color:white;border:none;padding:10px 25px;border-radius:20px;cursor:pointer;font-size:14px;">🔄 नई Enquiry भेजें</button>
+      </div>`;
+    }
   }, 800);
 }
 </script>
