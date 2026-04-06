@@ -139,6 +139,10 @@ body{font-family:'Inter',sans-serif;background:#ffffff;color:var(--text);overflo
 .hero-visual{flex-shrink:0;width:min(280px,34%);display:flex;flex-direction:column;gap:8px;}
 /* hero-visual is also a hero-col on mobile */
 @media(max-width:900px){.hero-visual{display:none !important;}}
+@media(max-width:768px){
+  #classGrid{grid-template-columns:repeat(4,1fr) !important;}
+  #edu-cls-subjects{grid-template-columns:1fr 1fr !important;}
+}
 .hv-card{
   background:rgba(255,255,255,0.07);
   border:1px solid rgba(255,255,255,0.15);
@@ -822,7 +826,7 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey&&(e.key==='u'||e.key==='s'|
 <!-- NAVBAR -->
 <nav class="navbar">
   <div class="nav-top">
-    <span>☀️ EcoSun Energy - Indore का भरोसेमंद Solar Partner | 📞 9340509033 / 9826391068 | 📧 <a href="mailto:ecosunenergy@zohomail.in" style="color:#fbbf24;">ecosunenergy@zohomail.in</a>
+    <span>☀️ EcoSun Energy - Indore का भरोसेमंद Solar Partner | 📞 9340509033 / 9826391068 | 📧 <a href="/cdn-cgi/l/email-protection#acc9cfc3dfd9c2c9c2c9decbd5ecd6c3c4c3c1cdc5c082c5c2" style="color:#fbbf24;"><span class="__cf_email__" data-cfemail="7d181e120e08131813180f1a043d07121512101c1411531413">[email&#160;protected]</span></a>
     <div style="display:flex;gap:15px;">
       <a href="#" onclick="showSection('admin-login')" style="color:white;font-size:11px;">🔑 Admin</a>
       <a href="#" onclick="showSection('partner-login')" style="color:white;font-size:11px;">👥 Partner Login</a>
@@ -1753,151 +1757,94 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey&&(e.key==='u'||e.key==='s'|
 </div>
 
 <!-- ===== EDUCATION SECTION ===== -->
-<div id="edu-section" class="page-section edu-section" style="display:none;">
-  <div style="text-align:center;padding:20px;">
-    <h1 style="font-size:32px;font-weight:900;">📚 EcoSun Learning Platform</h1>
-    <p style="font-size:16px;opacity:0.9;margin-top:10px;">Class 1-12 सभी विषय | Fun से सीखें | Games & Quiz</p>
-  </div>
-  
-  <!-- CLASS SELECTION -->
-  <div id="classSelection">
-    <h2 style="text-align:center;font-size:20px;margin-bottom:15px;">📖 अपनी Class चुनें</h2>
-    <div class="class-grid">
-      <div class="class-btn" onclick="selectClass(1)">Class 1</div>
-      <div class="class-btn" onclick="selectClass(2)">Class 2</div>
-      <div class="class-btn" onclick="selectClass(3)">Class 3</div>
-      <div class="class-btn" onclick="selectClass(4)">Class 4</div>
-      <div class="class-btn" onclick="selectClass(5)">Class 5</div>
-      <div class="class-btn" onclick="selectClass(6)">Class 6</div>
-      <div class="class-btn" onclick="selectClass(7)">Class 7</div>
-      <div class="class-btn" onclick="selectClass(8)">Class 8</div>
-      <div class="class-btn" onclick="selectClass(9)">Class 9</div>
-      <div class="class-btn" onclick="selectClass(10)">Class 10</div>
-      <div class="class-btn" onclick="selectClass(11)">Class 11</div>
-      <div class="class-btn" onclick="selectClass(12)">Class 12</div>
-    </div>
-  </div>
-  
-  <!-- SUBJECT SELECTION -->
-  <div id="subjectSelection" style="display:none;">
-    <button onclick="document.getElementById('classSelection').style.display='block';document.getElementById('subjectSelection').style.display='none';" 
-      style="background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.3);padding:8px 15px;border-radius:8px;cursor:pointer;margin:0 15px 15px;">← Back</button>
-    <h2 style="text-align:center;font-size:20px;margin-bottom:15px;">📚 Subject चुनें - <span id="selectedClassLabel"></span></h2>
-    <div class="subject-grid">
-      <div class="subject-card" onclick="startStudy('Hindi')">
-        <div class="icon">📝</div>
-        <div style="font-weight:700;">हिंदी</div>
-        <div style="font-size:11px;opacity:0.8;">Grammar, Poems, Stories</div>
-      </div>
-      <div class="subject-card" onclick="startStudy('English')">
-        <div class="icon">🔤</div>
-        <div style="font-weight:700;">English</div>
-        <div style="font-size:11px;opacity:0.8;">Grammar, Literature</div>
-      </div>
-      <div class="subject-card" onclick="startStudy('Math')">
-        <div class="icon">🔢</div>
-        <div style="font-weight:700;">Mathematics</div>
-        <div style="font-size:11px;opacity:0.8;">Numbers, Algebra, Geometry</div>
-      </div>
-      <div class="subject-card" onclick="startStudy('Science')">
-        <div class="icon">🔬</div>
-        <div style="font-weight:700;">Science</div>
-        <div style="font-size:11px;opacity:0.8;">Physics, Chemistry, Biology</div>
-      </div>
-      <div class="subject-card" onclick="startStudy('Social')">
-        <div class="icon">🌍</div>
-        <div style="font-weight:700;">Social Studies</div>
-        <div style="font-size:11px;opacity:0.8;">History, Geography, Civics</div>
-      </div>
-      <div class="subject-card" onclick="startStudy('Computer')">
-        <div class="icon">💻</div>
-        <div style="font-weight:700;">Computer</div>
-        <div style="font-size:11px;opacity:0.8;">Basics to Programming</div>
-      </div>
-      <div class="subject-card" onclick="startStudy('EVS')">
-        <div class="icon">🌿</div>
-        <div style="font-weight:700;">EVS</div>
-        <div style="font-size:11px;opacity:0.8;">Environment Studies</div>
-      </div>
-      <div class="subject-card" onclick="startStudy('GK')">
-        <div class="icon">🌟</div>
-        <div style="font-weight:700;">General Knowledge</div>
-        <div style="font-size:11px;opacity:0.8;">Current Affairs, Facts</div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- STUDY CONTENT -->
-  <div id="studyContent" style="display:none;max-width:700px;margin:0 auto;padding:20px;">
-    <button onclick="document.getElementById('subjectSelection').style.display='block';document.getElementById('studyContent').style.display='none';" 
-      style="background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.3);padding:8px 15px;border-radius:8px;cursor:pointer;margin-bottom:15px;">← Back</button>
-    <div id="studyContentInner"></div>
-    <button class="hero-btn" style="margin-top:15px;" onclick="startQuizForSubject()">🎯 Quiz खेलें</button>
-  </div>
-</div>
+<div id="edu-section" class="page-section" style="display:none;background:#0f0c29;color:white;">
+  <div id="edu-hub" style="display:block;">
 
-<!-- ===== LIFE SKILLS SECTION ===== -->
-<div id="skills-section" class="page-section skills-section" style="display:none;">
-  <div style="text-align:center;padding:20px;">
-    <h1 style="font-size:30px;font-weight:900;">💡 Life Skills - जीवन के जरूरी हुनर</h1>
-    <p style="font-size:16px;opacity:0.9;margin-top:10px;">Class 1-12 के बाद भी काम आने वाले Skills</p>
+    <!-- HEADER -->
+    <div style="background:linear-gradient(135deg,#4338ca,#6366f1,#8b5cf6);padding:32px 24px;text-align:center;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;"></div>
+      <div style="display:inline-block;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.35);border-radius:100px;padding:6px 18px;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;position:relative;">📚 FREE LEARNING PLATFORM</div>
+      <div style="font-size:clamp(24px,4vw,36px);font-weight:900;letter-spacing:-1px;margin-bottom:8px;position:relative;">EcoSun <span style="color:#fbbf24;">Learning!</span></div>
+      <div style="font-size:14px;opacity:0.8;position:relative;">Class 1-12 सभी विषय | Fun से सीखें | Games & Quiz</div>
+    </div>
+
+    <!-- STATS -->
+    <div style="display:flex;gap:10px;justify-content:center;padding:16px 24px;background:#1a1740;border-bottom:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;">
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px 22px;text-align:center;"><div style="font-size:20px;font-weight:900;color:#818cf8;">12</div><div style="font-size:9px;color:rgba(255,255,255,0.4);margin-top:2px;">📚 Classes</div></div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px 22px;text-align:center;"><div style="font-size:20px;font-weight:900;color:#818cf8;">50+</div><div style="font-size:9px;color:rgba(255,255,255,0.4);margin-top:2px;">📖 Subjects</div></div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px 22px;text-align:center;"><div style="font-size:20px;font-weight:900;color:#818cf8;">1000+</div><div style="font-size:9px;color:rgba(255,255,255,0.4);margin-top:2px;">📝 Notes</div></div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px 22px;text-align:center;"><div style="font-size:20px;font-weight:900;color:#22c55e;">FREE</div><div style="font-size:9px;color:rgba(255,255,255,0.4);margin-top:2px;">💰 Cost</div></div>
+    </div>
+
+    <!-- SEARCH + FILTERS -->
+    <div style="padding:16px 24px;background:#1a1740;border-bottom:1px solid rgba(255,255,255,0.06);">
+      <input id="eduSearch" placeholder="🔍 Subject, topic search karo..." style="width:100%;max-width:480px;display:block;margin:0 auto 12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:100px;padding:10px 20px;font-size:12px;font-family:Inter,sans-serif;outline:none;color:white;">
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+        <div onclick="filterEdu('all',this)" style="background:#6366f1;border-radius:100px;padding:7px 16px;font-size:11px;font-weight:700;color:white;cursor:pointer;">🌟 All</div>
+        <div onclick="filterEdu('math',this)" style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:100px;padding:7px 16px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);cursor:pointer;">🔢 Math</div>
+        <div onclick="filterEdu('science',this)" style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:100px;padding:7px 16px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);cursor:pointer;">🔬 Science</div>
+        <div onclick="filterEdu('english',this)" style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:100px;padding:7px 16px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);cursor:pointer;">📖 English</div>
+        <div onclick="filterEdu('hindi',this)" style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:100px;padding:7px 16px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);cursor:pointer;">🇮🇳 Hindi</div>
+        <div onclick="filterEdu('sst',this)" style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:100px;padding:7px 16px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);cursor:pointer;">🌍 SST</div>
+        <div onclick="filterEdu('computer',this)" style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:100px;padding:7px 16px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);cursor:pointer;">💻 Computer</div>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div style="padding:24px;max-width:1400px;margin:0 auto;">
+
+      <!-- CLASS GRID -->
+      <div style="font-size:16px;font-weight:800;color:rgba(255,255,255,0.65);margin-bottom:14px;display:flex;align-items:center;gap:8px;">📚 अपनी Class चुनें <span style="flex:1;height:1px;background:rgba(255,255,255,0.07);display:block;"></span></div>
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:28px;" id="classGrid">
+        <div onclick="openEduClass(1)" style="background:rgba(255,255,255,0.04);border:1.5px solid rgba(239,68,68,0.4);border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''"><div style="position:absolute;top:5px;right:5px;background:#22c55e;color:white;border-radius:100px;padding:2px 6px;font-size:7px;font-weight:800;">NEW</div><div style="font-size:26px;margin-bottom:6px;">🌟</div><div style="font-size:20px;font-weight:900;color:#ef4444;">1</div><div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.75);">Class 1</div><div style="font-size:8px;color:rgba(255,255,255,0.3);margin-top:2px;">6 Subjects</div></div>
+        <div onclick="openEduClass(2)" style="background:rgba(255,255,255,0.04);border:1.5px solid rgba(249,115,22,0.3);border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:6px;">🌈</div><div style="font-size:20px;font-weight:900;color:#f97316;">2</div><div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.75);">Class 2</div><div style="font-size:8px;color:rgba(255,255,255,0.3);margin-top:2px;">6 Subjects</div></div>
+        <div onclick="openEduClass(3)" style="background:rgba(255,255,255,0.04);border:1.5px solid rgba(234,179,8,0.3);border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:6px;">🌻</div><div style="font-size:20px;font-weight:900;color:#eab308;">3</div><div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.75);">Class 3</div><div style="font-size:8px;color:rgba(255,255,255,0.3);margin-top:2px;">7 Subjects</div></div>
+        <div onclick="openEduClass(4)" style="background:rgba(255,255,255,0.04);border:1.5px solid rgba(34,197,94,0.3);border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:6px;">🌱</div><div style="font-size:20px;font-weight:900;color:#22c55e;">4</div><div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.75);">Class 4</div><div style="font-size:8px;color:rgba(255,255,255,0.3);margin-top:2px;">7 Subjects</div></div>
+        <div onclick="openEduClass(5)" style="background:rgba(255,255,255,0.04);border:1.5px solid rgba(6,182,212,0.3);border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:6px;">🦋</div><div style="font-size:20px;font-weight:900;color:#06b6d4;">5</div><div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.75);">Class 5</div><div style="font-size:8px;color:rgba(255,255,255,0.3);margin-top:2px;">7 Subjects</div></div>
+        <div onclick="openEduClass(6)" style="background:rgba(255,255,255,0.04);border:1.5px solid rgba(99,102,241,0.5);border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''"><div style="position:absolute;top:5px;right:5px;background:#ff5500;color:white;border-radius:100px;padding:2px 6px;font-size:7px;font-weight:800;">HOT</div><div style="font-size:26px;margin-bottom:6px;">🔭</div><div style="font-size:20px;font-weight:900;color:#6366f1;">6</div><div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.75);">Class 6</div><div style="font-size:8px;color:rgba(255,255,255,0.3);margin-top:2px;">8 Subjects</div></div>
+        <div onclick="openEduClass(7)" style="background:rgba(255,255,255,0.04);border:1.5px solid rgba(139,92,246,0.3);border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:6px;">🧪</div><div style="font-size:20px;font-weight:900;color:#8b5cf6;">7</div><div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.75);">Class 7</div><div style="font-size:8px;color:rgba(255,255,255,0.3);margin-top:2px;">8 Subjects</div></div>
+        <div onclick="openEduClass(8)" style="background:rgba(255,255,255,0.04);border:1.5px solid rgba(236,72,153,0.3);border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:6px;">⚗️</div><div style="font-size:20px;font-weight:900;color:#ec4899;">8</div><div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.75);">Class 8</div><div style="font-size:8px;color:rgba(255,255,255,0.3);margin-top:2px;">8 Subjects</div></div>
+        <div onclick="openEduClass(9)" style="background:rgba(255,255,255,0.04);border:1.5px solid rgba(20,184,166,0.3);border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:6px;">🏆</div><div style="font-size:20px;font-weight:900;color:#14b8a6;">9</div><div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.75);">Class 9</div><div style="font-size:8px;color:rgba(255,255,255,0.3);margin-top:2px;">9 Subjects</div></div>
+        <div onclick="openEduClass(10)" style="background:rgba(255,255,255,0.04);border:1.5px solid rgba(245,158,11,0.5);border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''"><div style="position:absolute;top:5px;right:5px;background:#ff5500;color:white;border-radius:100px;padding:2px 6px;font-size:7px;font-weight:800;">HOT</div><div style="font-size:26px;margin-bottom:6px;">🎯</div><div style="font-size:20px;font-weight:900;color:#f59e0b;">10</div><div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.75);">Class 10</div><div style="font-size:8px;color:rgba(255,255,255,0.3);margin-top:2px;">Board Exam</div></div>
+        <div onclick="openEduClass(11)" style="background:rgba(255,255,255,0.04);border:1.5px solid rgba(16,185,129,0.3);border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:6px;">🚀</div><div style="font-size:20px;font-weight:900;color:#10b981;">11</div><div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.75);">Class 11</div><div style="font-size:8px;color:rgba(255,255,255,0.3);margin-top:2px;">9 Subjects</div></div>
+        <div onclick="openEduClass(12)" style="background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,85,0,0.5);border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''"><div style="position:absolute;top:5px;right:5px;background:#ff5500;color:white;border-radius:100px;padding:2px 6px;font-size:7px;font-weight:800;">HOT</div><div style="font-size:26px;margin-bottom:6px;">⭐</div><div style="font-size:20px;font-weight:900;color:#ff5500;">12</div><div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.75);">Class 12</div><div style="font-size:8px;color:rgba(255,255,255,0.3);margin-top:2px;">Board Exam</div></div>
+      </div>
+
+      <!-- POPULAR SUBJECTS -->
+      <div style="font-size:16px;font-weight:800;color:rgba(255,255,255,0.65);margin-bottom:14px;display:flex;align-items:center;gap:8px;">📖 Popular Subjects <span style="flex:1;height:1px;background:rgba(255,255,255,0.07);display:block;"></span></div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
+        <div style="background:rgba(59,130,246,0.08);border:1.5px solid rgba(59,130,246,0.2);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:7px;">🔢</div><div style="font-size:11px;font-weight:800;color:white;margin-bottom:3px;">Mathematics</div><div style="font-size:9px;color:rgba(255,255,255,0.35);">Class 1-12</div></div>
+        <div style="background:rgba(34,197,94,0.08);border:1.5px solid rgba(34,197,94,0.2);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:7px;">🔬</div><div style="font-size:11px;font-weight:800;color:white;margin-bottom:3px;">Science</div><div style="font-size:9px;color:rgba(255,255,255,0.35);">Physics, Chem, Bio</div></div>
+        <div style="background:rgba(236,72,153,0.08);border:1.5px solid rgba(236,72,153,0.2);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:7px;">📖</div><div style="font-size:11px;font-weight:800;color:white;margin-bottom:3px;">English</div><div style="font-size:9px;color:rgba(255,255,255,0.35);">Grammar + Literature</div></div>
+        <div style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.2);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:7px;">🇮🇳</div><div style="font-size:11px;font-weight:800;color:white;margin-bottom:3px;">Hindi</div><div style="font-size:9px;color:rgba(255,255,255,0.35);">व्याकरण + साहित्य</div></div>
+        <div style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.2);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:7px;">🌍</div><div style="font-size:11px;font-weight:800;color:white;margin-bottom:3px;">Social Science</div><div style="font-size:9px;color:rgba(255,255,255,0.35);">History, Geo, Civics</div></div>
+        <div style="background:rgba(14,165,233,0.08);border:1.5px solid rgba(14,165,233,0.2);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:7px;">💻</div><div style="font-size:11px;font-weight:800;color:white;margin-bottom:3px;">Computer</div><div style="font-size:9px;color:rgba(255,255,255,0.35);">Coding + IT</div></div>
+        <div style="background:rgba(255,85,0,0.08);border:1.5px solid rgba(255,85,0,0.2);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:7px;">☀️</div><div style="font-size:11px;font-weight:800;color:white;margin-bottom:3px;">Solar Education</div><div style="font-size:9px;color:rgba(255,255,255,0.35);">Green Energy</div></div>
+        <div style="background:rgba(236,72,153,0.08);border:1.5px solid rgba(236,72,153,0.2);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:7px;">🎨</div><div style="font-size:11px;font-weight:800;color:white;margin-bottom:3px;">Art & Craft</div><div style="font-size:9px;color:rgba(255,255,255,0.35);">Creativity</div></div>
+        <div style="background:rgba(34,197,94,0.08);border:1.5px solid rgba(34,197,94,0.2);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:7px;">🏃</div><div style="font-size:11px;font-weight:800;color:white;margin-bottom:3px;">Sports</div><div style="font-size:9px;color:rgba(255,255,255,0.35);">Health & Fitness</div></div>
+        <div style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.2);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''"><div style="font-size:26px;margin-bottom:7px;">💰</div><div style="font-size:11px;font-weight:800;color:white;margin-bottom:3px;">Finance Basics</div><div style="font-size:9px;color:rgba(255,255,255,0.35);">Money Skills</div></div>
+      </div>
+
+    </div>
   </div>
-  <div class="skills-grid">
-    <div class="skill-card" onclick="showSkillDetail('communication')">
-      <h3>🗣️ Communication Skills</h3>
-      <p>बात करने का तरीका, Presentation, Public Speaking, Interview Tips</p>
+
+  <!-- CLASS DETAIL PAGE -->
+  <div id="edu-class-page" style="display:none;">
+    <div id="edu-cls-head" style="padding:32px 24px;text-align:center;position:relative;overflow:hidden;color:white;">
+      <button onclick="closeEduClass()" style="position:absolute;top:16px;left:16px;background:rgba(255,255,255,0.15);border:none;border-radius:100px;padding:8px 18px;font-size:12px;font-weight:700;color:white;cursor:pointer;font-family:Inter,sans-serif;">← Back</button>
+      <div id="edu-cls-deco-l" style="position:absolute;top:15px;left:60px;font-size:28px;opacity:0.15;"></div>
+      <div id="edu-cls-deco-r" style="position:absolute;bottom:15px;right:20px;font-size:28px;opacity:0.15;"></div>
+      <div id="edu-cls-badge" style="display:inline-block;background:rgba(255,255,255,0.2);border:1.5px solid rgba(255,255,255,0.4);border-radius:100px;padding:6px 18px;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;position:relative;"></div>
+      <div id="edu-cls-logo" style="font-size:52px;margin-bottom:10px;position:relative;display:block;"></div>
+      <div id="edu-cls-title" style="font-size:32px;font-weight:900;letter-spacing:-1px;margin-bottom:10px;position:relative;"></div>
+      <div id="edu-cls-slogan" style="font-size:17px;font-weight:700;font-style:italic;opacity:0.95;margin-bottom:8px;position:relative;"></div>
+      <div id="edu-cls-sub" style="font-size:13px;opacity:0.75;position:relative;"></div>
     </div>
-    <div class="skill-card" onclick="showSkillDetail('problem-solving')">
-      <h3>🧩 Problem Solving</h3>
-      <p>हर मुश्किल का हल निकालना, Logical Thinking, Decision Making</p>
-    </div>
-    <div class="skill-card" onclick="showSkillDetail('critical-thinking')">
-      <h3>🤔 Critical Thinking</h3>
-      <p>सोचने का सही तरीका, Analyze करना, Fake News पहचानना</p>
-    </div>
-    <div class="skill-card" onclick="showSkillDetail('emotional-intelligence')">
-      <h3>❤️ Emotional Intelligence</h3>
-      <p>Emotions को समझना, Stress Management, Relationships</p>
-    </div>
-    <div class="skill-card" onclick="showSkillDetail('financial-literacy')">
-      <h3>💰 Financial Literacy</h3>
-      <p>पैसे की समझ, Saving, Investment, Budget बनाना</p>
-    </div>
-    <div class="skill-card" onclick="showSkillDetail('digital-literacy')">
-      <h3>💻 Digital Literacy</h3>
-      <p>Internet, Social Media, Cybersecurity, Online Safety</p>
-    </div>
-    <div class="skill-card" onclick="showSkillDetail('time-management')">
-      <h3>⏰ Time Management</h3>
-      <p>समय का सही उपयोग, Priority Setting, Productivity</p>
-    </div>
-    <div class="skill-card" onclick="showSkillDetail('adaptability')">
-      <h3>🔄 Adaptability</h3>
-      <p>बदलाव को स्वीकारना, Flexibility, Growth Mindset</p>
-    </div>
-    <div class="skill-card" onclick="showSkillDetail('creativity')">
-      <h3>🎨 Creativity</h3>
-      <p>नए Ideas, Innovation, Art, Music, Writing</p>
-    </div>
-    <div class="skill-card" onclick="showSkillDetail('self-defense')">
-      <h3>🥋 Self Defense</h3>
-      <p>खुद की सुरक्षा, Basic Techniques, Awareness</p>
-    </div>
-    <div class="skill-card" onclick="showSkillDetail('empathy')">
-      <h3>🤝 Empathy</h3>
-      <p>दूसरों को समझना, Kindness, Social Responsibility</p>
-    </div>
-    <div class="skill-card" onclick="showSkillDetail('basic-life-skills')">
-      <h3>🏠 Basic Life Skills</h3>
-      <p>Cooking, Cleaning, First Aid, Home Management</p>
-    </div>
-  </div>
-  
-  <!-- SKILL DETAIL MODAL -->
-  <div id="skillModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:10000;overflow-y:auto;padding:20px;">
-    <div style="max-width:600px;margin:0 auto;background:white;border-radius:20px;padding:30px;">
-      <button onclick="document.getElementById('skillModal').style.display='none'" style="background:none;border:none;font-size:24px;cursor:pointer;float:right;">✕</button>
-      <div id="skillModalContent"></div>
+    <div id="edu-cls-stats" style="display:flex;gap:10px;justify-content:center;padding:14px 24px;background:#1a1740;border-bottom:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;"></div>
+    <div style="padding:24px;max-width:1200px;margin:0 auto;">
+      <div style="font-size:16px;font-weight:800;color:rgba(255,255,255,0.65);margin-bottom:14px;display:flex;align-items:center;gap:8px;" id="edu-subj-title"></div>
+      <div id="edu-cls-subjects" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;"></div>
+      <div id="edu-cls-motivate" style="border-radius:18px;padding:24px;text-align:center;color:white;"></div>
     </div>
   </div>
 </div>
@@ -2424,7 +2371,7 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey&&(e.key==='u'||e.key==='s'|
       <p>Solar लगवाने से पहले Free Consultation लें। हमारे experts आपको सही system, subsidy और ROI की पूरी जानकारी देंगे — बिल्कुल मुफ्त।</p>
       <div class="enq-contact-item"><span>📞</span><div><strong>Call करें</strong><br><a href="tel:9340509033" style="color:#2e7d32;">9340509033</a> / <a href="tel:9826391068" style="color:#2e7d32;">9826391068</a></div></div>
       <div class="enq-contact-item"><span>💬</span><div><strong>WhatsApp</strong><br><a href="https://wa.me/919340509033" target="_blank" style="color:#25d366;">+91 93405 09033</a></div></div>
-      <div class="enq-contact-item"><span>📧</span><div><strong>Email</strong><br><a href="mailto:ecosunenergy@zohomail.in" style="color:#2e7d32;font-weight:600;">ecosunenergy@zohomail.in</a></div></div>
+      <div class="enq-contact-item"><span>📧</span><div><strong>Email</strong><br><a href="/cdn-cgi/l/email-protection#5336303c20263d363d3621342a13293c3b3c3e323a3f7d3a3d" style="color:#2e7d32;font-weight:600;"><span class="__cf_email__" data-cfemail="1570767a66607b707b7067726c556f7a7d7a78747c793b7c7b">[email&#160;protected]</span></a></div></div>
       <div class="enq-contact-item"><span>📍</span><div><strong>Address</strong><br>15-E, SN Corridor, Indore, MP 452001</div></div>
       <div class="enq-contact-item"><span>🌐</span><div><strong>Website</strong><br><a href="https://www.ecosunenergy.co.in" target="_blank" style="color:#2e7d32;font-weight:700;">www.ecosunenergy.co.in</a></div></div>
       <div class="enq-info-box">
@@ -2501,7 +2448,7 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey&&(e.key==='u'||e.key==='s'|
       <h3>📞 Contact</h3>
       <a href="tel:9340509033">📱 9340509033</a>
       <a href="tel:9826391068">📱 9826391068</a>
-      <a href="mailto:ecosunenergy@zohomail.in">✉️ ecosunenergy@zohomail.in</a>
+      <a href="/cdn-cgi/l/email-protection#5f3a3c302c2a313a313a2d38261f25303730323e3633713631">✉️ <span class="__cf_email__" data-cfemail="2247414d51574c474c4750455b62584d4a4d4f434b4e0c4b4c">[email&#160;protected]</span></a>
       <a href="https://wa.me/919340509033" target="_blank">💬 WhatsApp Chat</a>
       <a href="https://www.ecosunenergy.co.in" target="_blank">🌐 ecosunenergy.co.in</a>
       <a href="#" onclick="showSection('contact-section')">📋 Free Enquiry</a>
@@ -2513,7 +2460,7 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey&&(e.key==='u'||e.key==='s'|
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ============================================================
 // ECOSUN SUPERAPP - COMPLETE JAVASCRIPT ENGINE
 // ============================================================
@@ -3804,7 +3751,7 @@ console.log('EcoSun SuperApp loaded successfully! 🚀');
     <a href="tel:1912">☎️ 1912 Bijli Helpline</a>
     <a href="tel:19121">☎️ 19121 Solar Helpline</a>
     <a href="https://wa.me/919340509033" target="_blank">💬 WhatsApp Help</a>
-    <a href="mailto:ecosunenergy@zohomail.in">📧 ecosunenergy@zohomail.in</a>
+    <a href="/cdn-cgi/l/email-protection#f297919d81879c979c9780958bb2889d9a9d9f939b9edc9b9c">📧 <span class="__cf_email__" data-cfemail="5b3e3834282e353e353e293c221b21343334363a3237753235">[email&#160;protected]</span></a>
   </div>
 </div>
 
@@ -4648,7 +4595,7 @@ console.log('EcoSun SuperApp loaded successfully! 🚀');
 </footer>
 
 <!-- JAVASCRIPT -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 function showTab(tab) {
   ['bijli','solar','dcr','jobs','govt','calculator'].forEach(t => {
     document.getElementById('tab-'+t).style.display = 'none';
@@ -5056,11 +5003,60 @@ function submitEnquiry() {
       box.innerHTML = `<div style="text-align:center;padding:30px;">
         <div style="font-size:64px;margin-bottom:15px;">🎉</div>
         <h3 style="color:#2e7d32;margin-bottom:10px;">Enquiry Send हो गई!</h3>
-        <p style="color:#555;font-size:14px;line-height:1.7;">हमारी team 2-4 घंटे में आपसे contact करेगी।</p>
-        <button onclick="location.reload()" style="margin-top:15px;background:#2e7d32;color:white;border:none;padding:10px 25px;border-radius:20px;cursor:pointer;font-size:14px;">🔄 नई Enquiry भेजें</button>
+        <p style="color:#555;font-size:14px;">हमारी team 2-4 घंटे में आपसे contact करेगी।</p>
+        <button onclick="location.reload()" style="margin-top:15px;background:#2e7d32;color:white;border:none;padding:10px 25px;border-radius:20px;cursor:pointer;">🔄 नई Enquiry भेजें</button>
       </div>`;
     }
   }, 800);
+}
+
+// EDU CLASS DATA
+const eduClasses = {
+  1:{bg:'linear-gradient(135deg,#f59e0b,#ef4444)',logo:'🌟',badge:'📚 CLASS 1 — BEGINNERS',title:'पहली कक्षा',slogan:'"हर बड़ी यात्रा एक छोटे कदम से शुरू होती है!"',sub:'मज़े से सीखो • खेल-खेल में पढ़ो • हर दिन कुछ नया!',dL:'⭐🌈🎨🦋🌟',dR:'🎪🌺🦄🎠🎡',subjects:[{i:'🔢',n:'Mathematics',d:'Numbers, Counting, Shapes',bg:'rgba(59,130,246,0.1)',bc:'rgba(59,130,246,0.3)',btn:'#3b82f6',bt:'Padho →'},{i:'📖',n:'English',d:'A-Z, Words, Stories',bg:'rgba(236,72,153,0.1)',bc:'rgba(236,72,153,0.3)',btn:'#ec4899',bt:'Padho →'},{i:'🇮🇳',n:'Hindi',d:'अ-ज्ञ, शब्द, कहानियां',bg:'rgba(245,158,11,0.1)',bc:'rgba(245,158,11,0.3)',btn:'#f59e0b',bt:'पढ़ो →'},{i:'🌿',n:'EVS',d:'Nature, Animals, Family',bg:'rgba(34,197,94,0.1)',bc:'rgba(34,197,94,0.3)',btn:'#22c55e',bt:'Padho →'},{i:'🎨',n:'Art & Craft',d:'Drawing, Colors, Fun',bg:'rgba(139,92,246,0.1)',bc:'rgba(139,92,246,0.3)',btn:'#8b5cf6',bt:'Banao →'},{i:'🎵',n:'Music & Rhymes',d:'Poems, Songs, Nursery',bg:'rgba(239,68,68,0.1)',bc:'rgba(239,68,68,0.3)',btn:'#ef4444',bt:'Gao →'}],mot:{ico:'🚀',txt:'"तुम कर सकते हो! बस शुरू करो!"',sub:'EcoSun Learning — हर बच्चे का भविष्य उज्जवल ☀️',bg:'linear-gradient(135deg,#6366f1,#8b5cf6)'}},
+  2:{bg:'linear-gradient(135deg,#f97316,#fbbf24)',logo:'🌈',badge:'📚 CLASS 2 — EXPLORERS',title:'दूसरी कक्षा',slogan:'"जिज्ञासा ही सबसे बड़ा शिक्षक है!"',sub:'नई चीज़ें सीखो • सवाल पूछो • आगे बढ़ो!',dL:'🌈🌸🦁🐘🌟',dR:'🦊🌺🐯🦋🌈',subjects:[{i:'🔢',n:'Mathematics',d:'Tables, Addition, Subtraction',bg:'rgba(59,130,246,0.1)',bc:'rgba(59,130,246,0.3)',btn:'#3b82f6',bt:'Padho →'},{i:'📖',n:'English',d:'Reading, Writing, Grammar',bg:'rgba(236,72,153,0.1)',bc:'rgba(236,72,153,0.3)',btn:'#ec4899',bt:'Padho →'},{i:'🇮🇳',n:'Hindi',d:'व्याकरण, निबंध, कहानियां',bg:'rgba(245,158,11,0.1)',bc:'rgba(245,158,11,0.3)',btn:'#f59e0b',bt:'पढ़ो →'},{i:'🌍',n:'EVS',d:'Our World, Community',bg:'rgba(34,197,94,0.1)',bc:'rgba(34,197,94,0.3)',btn:'#22c55e',bt:'Padho →'},{i:'🎨',n:'Art & Craft',d:'Creative Drawing',bg:'rgba(139,92,246,0.1)',bc:'rgba(139,92,246,0.3)',btn:'#8b5cf6',bt:'Banao →'},{i:'🎵',n:'Music',d:'Songs, Rhymes, Instruments',bg:'rgba(239,68,68,0.1)',bc:'rgba(239,68,68,0.3)',btn:'#ef4444',bt:'Gao →'}],mot:{ico:'🌈',txt:'"हर सवाल एक नई खोज की शुरुआत है!"',sub:'EcoSun Learning — साथ सीखें, साथ बढ़ें ☀️',bg:'linear-gradient(135deg,#f97316,#ef4444)'}},
+};
+
+function getEduClass(n){
+  if(eduClasses[n]) return eduClasses[n];
+  const clrs=['','#ef4444','#f97316','#eab308','#22c55e','#06b6d4','#6366f1','#8b5cf6','#ec4899','#14b8a6','#f59e0b','#10b981','#ff5500'];
+  const logos=['','🌟','🌈','🌻','🌱','🦋','🔭','🧪','⚗️','🏆','🎯','🚀','⭐'];
+  const slogans=['','"हर बड़ी यात्रा एक छोटे कदम से!"','"जिज्ञासा ही सबसे बड़ा शिक्षक है!"','"सीखते रहो, बढ़ते रहो!"','"ज्ञान ही शक्ति है!"','"हर दिन कुछ नया सीखो!"','"सोचो, समझो, आगे बढ़ो!"','"विज्ञान से बनाओ बेहतर कल!"','"मेहनत का कोई विकल्प नहीं!"','"सफलता उनकी जो कोशिश करते!"','"मेहनत करो, सपने पूरे होंगे!"','"आज की मेहनत, कल की सफलता!"','"लक्ष्य तय करो, पाकर रहो!"'];
+  return {bg:`linear-gradient(135deg,${clrs[n]},${clrs[n]}88)`,logo:logos[n],badge:`📚 CLASS ${n}`,title:`कक्षा ${n}`,slogan:slogans[n],sub:`Class ${n} — सभी Subjects | Notes | Quiz`,dL:'📚✏️📝🎓⭐',dR:'🏆🌟📖🔢🎯',
+  subjects:[{i:'🔢',n:'Mathematics',d:'Numbers, Algebra',bg:'rgba(59,130,246,0.1)',bc:'rgba(59,130,246,0.3)',btn:'#3b82f6',bt:'Padho →'},{i:'🔬',n:'Science',d:'Physics, Chemistry, Bio',bg:'rgba(34,197,94,0.1)',bc:'rgba(34,197,94,0.3)',btn:'#22c55e',bt:'Padho →'},{i:'📖',n:'English',d:'Grammar, Literature',bg:'rgba(236,72,153,0.1)',bc:'rgba(236,72,153,0.3)',btn:'#ec4899',bt:'Padho →'},{i:'🇮🇳',n:'Hindi',d:'व्याकरण, साहित्य',bg:'rgba(245,158,11,0.1)',bc:'rgba(245,158,11,0.3)',btn:'#f59e0b',bt:'पढ़ो →'},{i:'🌍',n:'Social Science',d:'History, Geo, Civics',bg:'rgba(139,92,246,0.1)',bc:'rgba(139,92,246,0.3)',btn:'#8b5cf6',bt:'Padho →'},{i:'💻',n:'Computer',d:'IT, Coding',bg:'rgba(14,165,233,0.1)',bc:'rgba(14,165,233,0.3)',btn:'#0ea5e9',bt:'Seekho →'}],
+  mot:{ico:'🚀',txt:'"पढ़ोगे लिखोगे बनोगे नवाब!"',sub:'EcoSun Learning ☀️',bg:`linear-gradient(135deg,${clrs[n]},#6366f1)`}};
+}
+
+function openEduClass(n){
+  const d = getEduClass(n);
+  document.getElementById('edu-hub').style.display='none';
+  document.getElementById('edu-class-page').style.display='block';
+  const head = document.getElementById('edu-cls-head');
+  head.style.background = d.bg;
+  document.getElementById('edu-cls-deco-l').textContent = d.dL;
+  document.getElementById('edu-cls-deco-r').textContent = d.dR;
+  document.getElementById('edu-cls-badge').textContent = d.badge;
+  document.getElementById('edu-cls-logo').textContent = d.logo;
+  document.getElementById('edu-cls-title').textContent = d.title;
+  document.getElementById('edu-cls-slogan').textContent = d.slogan;
+  document.getElementById('edu-cls-sub').textContent = d.sub;
+  document.getElementById('edu-subj-title').textContent = `📖 Class ${n} ke Subjects`;
+  document.getElementById('edu-cls-stats').innerHTML = `<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 18px;text-align:center;"><div style="font-size:18px;font-weight:900;color:#818cf8;">${n<=5?6:n<=8?8:9}</div><div style="font-size:9px;color:rgba(255,255,255,0.4);">📖 Subjects</div></div><div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 18px;text-align:center;"><div style="font-size:18px;font-weight:900;color:#818cf8;">${n*10+40}+</div><div style="font-size:9px;color:rgba(255,255,255,0.4);">📝 Chapters</div></div><div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 18px;text-align:center;"><div style="font-size:18px;font-weight:900;color:#818cf8;">${n*20+80}+</div><div style="font-size:9px;color:rgba(255,255,255,0.4);">🎮 Activities</div></div><div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 18px;text-align:center;"><div style="font-size:18px;font-weight:900;color:#22c55e;">FREE</div><div style="font-size:9px;color:rgba(255,255,255,0.4);">💰 Cost</div></div>`;
+  document.getElementById('edu-cls-subjects').innerHTML = d.subjects.map(s=>`<div style="background:${s.bg};border:1.5px solid ${s.bc};border-radius:16px;padding:20px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''"><div style="font-size:38px;margin-bottom:10px;">${s.i}</div><div style="font-size:14px;font-weight:800;color:white;margin-bottom:5px;">${s.n}</div><div style="font-size:11px;color:rgba(255,255,255,0.55);margin-bottom:12px;line-height:1.5;">${s.d}</div><button style="background:${s.btn};color:white;border:none;border-radius:100px;padding:8px 20px;font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;">${s.bt}</button></div>`).join('');
+  const m = d.mot;
+  document.getElementById('edu-cls-motivate').style.background = m.bg;
+  document.getElementById('edu-cls-motivate').innerHTML = `<div style="font-size:40px;margin-bottom:10px;">${m.ico}</div><div style="font-size:20px;font-weight:800;margin-bottom:8px;">${m.txt}</div><div style="font-size:13px;opacity:0.8;">${m.sub}</div>`;
+  window.scrollTo(0,0);
+}
+
+function closeEduClass(){
+  document.getElementById('edu-class-page').style.display='none';
+  document.getElementById('edu-hub').style.display='block';
+  window.scrollTo(0,0);
+}
+
+function filterEdu(cat, btn){
+  document.querySelectorAll('#edu-section [onclick^="filterEdu"]').forEach(b=>{b.style.background='rgba(255,255,255,0.05)';b.style.color='rgba(255,255,255,0.5)';b.style.borderColor='rgba(255,255,255,0.1)';});
+  btn.style.background='#6366f1';btn.style.color='white';btn.style.borderColor='#6366f1';
 }
 </script>
 </body>
