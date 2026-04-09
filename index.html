@@ -871,7 +871,8 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey&&(e.key==='u'||e.key==='s'|
     <a href="#" onclick="showSection('schemes-section')">🏛️ Govt Schemes</a>
     <a href="#" onclick="showSection('gallery-section')">📸 Gallery</a>
     <a href="#" onclick="showSection('blog-section')">📰 Blog</a>
-    <a href="#" onclick="showSection('contact-section')">📋 Enquiry</a>
+    <a href="#" onclick="showSection('mf-section')">💹 Mutual Fund</a>
+            <a href="#" onclick="showSection('contact-section')">📋 Enquiry</a>
   </div>
 </nav>
 
@@ -2532,7 +2533,7 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey&&(e.key==='u'||e.key==='s'|
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ============================================================
 // ECOSUN SUPERAPP - COMPLETE JAVASCRIPT ENGINE
 // ============================================================
@@ -4667,7 +4668,7 @@ console.log('EcoSun SuperApp loaded successfully! 🚀');
 </footer>
 
 <!-- JAVASCRIPT -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 function showTab(tab) {
   ['bijli','solar','dcr','jobs','govt','calculator'].forEach(t => {
     document.getElementById('tab-'+t).style.display = 'none';
@@ -5443,6 +5444,255 @@ function filterEdu(cat,btn){
   btn.style.color='white';
   btn.style.borderColor='#6366f1';
 }
+
+// ===== MUTUAL FUND FUNCTIONS =====
+function switchMFTab(tab, btn) {
+  document.querySelectorAll('.mf-tab').forEach(function(t){t.classList.remove('active');});
+  btn.classList.add('active');
+  ['sites','calc','history','learn','types'].forEach(function(t){
+    var el=document.getElementById('mftab-'+t);
+    if(el) el.style.display=(t===tab)?'block':'none';
+  });
+  if(tab==='calc'){calcSIP();buildSIPGraph();}
+  if(tab==='history'){buildHistGraph();}
+}
+
+function calcSIP() {
+  var P=parseFloat(document.getElementById('sipAmt').value)||5000;
+  var n=parseFloat(document.getElementById('sipYears').value)||10;
+  var r=(parseFloat(document.getElementById('sipRate').value)||12)/100/12;
+  var months=n*12;
+  var totalInvested=P*months;
+  var totalValue=P*((Math.pow(1+r,months)-1)/r)*(1+r);
+  var returns=totalValue-totalInvested;
+  var pct=Math.round((returns/totalInvested)*100);
+  function fmt(n){if(n>=10000000)return(n/10000000).toFixed(1)+' Cr';if(n>=100000)return(n/100000).toFixed(1)+' L';if(n>=1000)return(n/1000).toFixed(1)+'K';return n;}
+  var ti=document.getElementById('sipTotalInvested');
+  var er=document.getElementById('sipEstReturn');
+  var tv=document.getElementById('sipTotalValue');
+  var wg=document.getElementById('sipWealthGained');
+  if(ti)ti.textContent='₹'+fmt(Math.round(totalInvested));
+  if(er)er.textContent='₹'+fmt(Math.round(returns));
+  if(tv)tv.textContent='₹'+fmt(Math.round(totalValue));
+  if(wg)wg.textContent=pct+'%';
+  drawSIPPie(totalInvested,returns);
+  buildSIPGraph();
+}
+
+function fmt(n){if(n>=10000000)return(n/10000000).toFixed(1)+' Cr';if(n>=100000)return(n/100000).toFixed(1)+' L';if(n>=1000)return(n/1000).toFixed(1)+'K';return n;}
+
+function drawSIPPie(inv,ret){
+  var c=document.getElementById('sipPieChart');
+  if(!c)return;
+  var ctx=c.getContext('2d');
+  var total=inv+ret;
+  var invAngle=(inv/total)*(2*Math.PI);
+  ctx.clearRect(0,0,200,120);
+  var cx=100,cy=60,r=50;
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,0,invAngle);ctx.closePath();ctx.fillStyle='#3b82f6';ctx.fill();
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,invAngle,2*Math.PI);ctx.closePath();ctx.fillStyle='#34d399';ctx.fill();
+}
+
+function buildSIPGraph(){
+  var P=parseFloat(document.getElementById('sipAmt').value)||5000;
+  var n=parseInt(document.getElementById('sipYears').value)||10;
+  var r=(parseFloat(document.getElementById('sipRate').value)||12)/100/12;
+  var g=document.getElementById('sipGraphBars');
+  var lb=document.getElementById('sipGraphLabels');
+  if(!g)return;
+  var values=[];
+  for(var y=1;y<=n;y++){var months=y*12;var val=P*((Math.pow(1+r,months)-1)/r)*(1+r);values.push({y:y,val:val});}
+  var max=values[values.length-1].val;
+  var colors=['#3b82f6','#6366f1','#8b5cf6','#a855f7','#ec4899','#f43f5e','#ef4444','#f97316','#f59e0b','#22c55e','#14b8a6','#06b6d4','#0ea5e9','#3b82f6','#6366f1','#8b5cf6','#a855f7','#ec4899','#f43f5e','#ef4444','#f97316','#f59e0b','#22c55e','#14b8a6','#06b6d4','#0ea5e9','#3b82f6','#6366f1','#8b5cf6','#a855f7','#ec4899','#f43f5e','#ef4444','#f97316','#f59e0b','#22c55e','#14b8a6','#06b6d4','#0ea5e9','#3b82f6'];
+  g.innerHTML=values.map(function(v,i){return '<div style="flex:1;height:'+Math.round((v.val/max)*160)+'px;background:'+colors[i]+';border-radius:4px 4px 0 0;min-height:4px;position:relative;" title="Yr '+v.y+': ₹'+fmt(Math.round(v.val))+'"></div>';}).join('');
+  lb.innerHTML=values.map(function(v){return '<span style="font-size:9px;color:rgba(255,255,255,0.35);">Yr '+v.y+'</span>';}).join('');
+}
+
+function buildHistGraph(){
+  var data=[
+    {y:'1990',v:15},{y:'1995',v:8},{y:'2000',v:22},{y:'2003',v:-13},{y:'2004',v:18},
+    {y:'2005',v:42},{y:'2006',v:46},{y:'2007',v:47},{y:'2008',v:-52},{y:'2009',v:81},
+    {y:'2010',v:17},{y:'2011',v:-25},{y:'2012',v:26},{y:'2013',v:9},{y:'2014',v:30},
+    {y:'2015',v:-5},{y:'2016',v:2},{y:'2017',v:28},{y:'2018',v:6},{y:'2019',v:14},
+    {y:'2020',v:16},{y:'2021',v:22},{y:'2022',v:4},{y:'2023',v:19},{y:'2024',v:8}
+  ];
+  var max=Math.max.apply(null,data.map(function(d){return Math.abs(d.v);}));
+  var g=document.getElementById('histGraphBars');
+  var lb=document.getElementById('histGraphLabels');
+  if(!g)return;
+  g.innerHTML=data.map(function(d){return '<div style="flex:1;height:'+Math.round((Math.abs(d.v)/max)*160)+'px;background:'+(d.v>=0?'#34d399':'#f87171')+';border-radius:4px 4px 0 0;min-height:4px;" title="'+(d.v>=0?'+':'')+d.v+'%"></div>';}).join('');
+  lb.innerHTML=data.map(function(d){return '<span style="font-size:8px;color:rgba(255,255,255,0.35);">'+d.y+'</span>';}).join('');
+}
 </script>
+
+<!-- ===== MUTUAL FUND SECTION ===== -->
+<div id="mf-section" class="page-section" style="display:none;background:#0a0f1e;color:white;">
+<style>
+.mf-header{background:linear-gradient(135deg,#064e3b,#065f46,#047857);padding:28px 24px;text-align:center;position:relative;overflow:hidden;}
+.mf-header::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:28px 28px;}
+.mf-badge{display:inline-block;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.35);border-radius:100px;padding:6px 18px;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;position:relative;}
+.mf-title{font-size:clamp(22px,4vw,32px);font-weight:900;margin-bottom:8px;position:relative;}
+.mf-title span{color:#34d399;}
+.mf-sub{font-size:13px;opacity:0.75;position:relative;}
+.mf-stats{display:flex;gap:10px;justify-content:center;padding:14px 24px;background:#0a1628;border-bottom:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;}
+.mf-stat{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px 20px;text-align:center;}
+.mf-stat-n{font-size:20px;font-weight:900;color:#34d399;}
+.mf-stat-l{font-size:9px;color:rgba(255,255,255,0.4);margin-top:2px;}
+.mf-tabs{display:flex;gap:8px;padding:12px 24px;background:#0a1628;border-bottom:1px solid rgba(255,255,255,0.06);overflow-x:auto;scrollbar-width:none;}
+.mf-tab{padding:9px 20px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.04);white-space:nowrap;font-family:Inter,sans-serif;transition:all 0.2s;}
+.mf-tab.active{background:#059669;border-color:#059669;color:white;}
+.mf-content{padding:20px 24px;max-width:1300px;margin:0 auto;}
+.mf-sec-title{font-size:15px;font-weight:800;color:rgba(255,255,255,0.6);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.mf-sec-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.07);}
+.mf-sites-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+.mf-site-card{background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:18px;padding:20px;cursor:pointer;transition:all 0.2s;}
+.mf-site-card:hover{transform:translateY(-4px);border-color:rgba(52,211,153,0.4);background:rgba(52,211,153,0.06);}
+.mf-site-btn{background:linear-gradient(135deg,#059669,#047857);border:none;border-radius:100px;padding:9px 0;font-size:12px;font-weight:700;color:white;cursor:pointer;font-family:Inter,sans-serif;width:100%;}
+.mf-calc-wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+.mf-box{background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:18px;padding:20px;}
+.mf-label{font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:6px;display:block;font-weight:600;}
+.mf-input{width:100%;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px 14px;color:white;font-size:13px;font-family:Inter,sans-serif;outline:none;margin-bottom:4px;}
+.mf-range{width:100%;accent-color:#059669;margin-bottom:12px;}
+.mf-calc-btn{background:linear-gradient(135deg,#059669,#047857);border:none;border-radius:100px;padding:12px 0;font-size:14px;font-weight:800;color:white;cursor:pointer;font-family:Inter,sans-serif;width:100%;margin-top:4px;}
+.mf-result-item{background:rgba(255,255,255,0.04);border-radius:12px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}
+.mf-graph-area{height:180px;background:rgba(0,0,0,0.2);border-radius:12px;padding:10px;overflow:hidden;display:flex;align-items:flex-end;gap:3px;}
+.mf-history-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:20px;}
+.mf-history-card{background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:18px;padding:18px;}
+.mf-htable{width:100%;border-collapse:collapse;}
+.mf-htable th{font-size:10px;color:rgba(255,255,255,0.4);padding:4px 8px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.06);}
+.mf-htable td{font-size:12px;padding:6px 8px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.mf-pos{color:#34d399;font-weight:700;}
+.mf-neg{color:#f87171;font-weight:700;}
+.mf-edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+.mf-edu-card{background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:18px;padding:20px;cursor:pointer;transition:all 0.2s;}
+.mf-edu-card:hover{transform:translateY(-4px);border-color:rgba(52,211,153,0.4);}
+@media(max-width:600px){.mf-sites-grid{grid-template-columns:1fr 1fr;}.mf-calc-wrap{grid-template-columns:1fr;}.mf-history-grid{grid-template-columns:1fr;}.mf-edu-grid{grid-template-columns:1fr 1fr;}}
+</style>
+
+  <!-- HEADER -->
+  <div class="mf-header">
+    <div class="mf-badge">💹 MUTUAL FUND HUB</div>
+    <div class="mf-title">EcoSun <span>Invest!</span></div>
+    <div class="mf-sub">Top Funds • SIP Calculator • Historical Data • MF Education — Sab FREE!</div>
+  </div>
+
+  <!-- STATS -->
+  <div class="mf-stats">
+    <div class="mf-stat"><div class="mf-stat-n">₹40L+Cr</div><div class="mf-stat-l">💰 MF Industry AUM</div></div>
+    <div class="mf-stat"><div class="mf-stat-n">10,000+</div><div class="mf-stat-l">📊 Fund Schemes</div></div>
+    <div class="mf-stat"><div class="mf-stat-n">16 Cr+</div><div class="mf-stat-l">👥 SIP Investors</div></div>
+    <div class="mf-stat"><div class="mf-stat-n">15-18%</div><div class="mf-stat-l">📈 Avg Equity Returns</div></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="mf-tabs">
+    <div class="mf-tab active" onclick="switchMFTab('sites',this)">🌐 Top MF Websites</div>
+    <div class="mf-tab" onclick="switchMFTab('calc',this)">🧮 SIP Calculator</div>
+    <div class="mf-tab" onclick="switchMFTab('history',this)">📊 Historical Data</div>
+    <div class="mf-tab" onclick="switchMFTab('learn',this)">📚 MF Education</div>
+    <div class="mf-tab" onclick="switchMFTab('types',this)">🗂️ Fund Types</div>
+  </div>
+
+  <div class="mf-content">
+
+    <!-- TAB: TOP WEBSITES -->
+    <div id="mftab-sites">
+      <div class="mf-sec-title">🌐 Top Mutual Fund Websites — Direct Links</div>
+      <div class="mf-sites-grid">
+        <div class="mf-site-card"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#1e40af,#3b82f6);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">💙</div><div><div style="font-size:15px;font-weight:800;color:white;">Groww</div><div style="font-size:10px;color:rgba(255,255,255,0.4);">Direct MF • Stocks • FD</div></div></div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">India ka #1 investment app! Zero commission, direct mutual funds. Beginner ke liye best!</div><div style="display:flex;gap:6px;margin-bottom:12px;"><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">✅ Zero Commission</span><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">📱 Mobile App</span></div><button class="mf-site-btn" onclick="window.open('https://groww.in','_blank')">🔗 Open Groww</button></div>
+        <div class="mf-site-card"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">💜</div><div><div style="font-size:15px;font-weight:800;color:white;">Zerodha Coin</div><div style="font-size:10px;color:rgba(255,255,255,0.4);">Direct MF Platform</div></div></div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">Zerodha ka MF platform — Direct funds, zero commission. Stock traders ke liye best!</div><div style="display:flex;gap:6px;margin-bottom:12px;"><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">✅ Direct Plans</span><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">📊 Analytics</span></div><button class="mf-site-btn" onclick="window.open('https://coin.zerodha.com','_blank')">🔗 Open Coin</button></div>
+        <div class="mf-site-card"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#dc2626,#ef4444);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">❤️</div><div><div style="font-size:15px;font-weight:800;color:white;">ET Money</div><div style="font-size:10px;color:rgba(255,255,255,0.4);">Smart Invest Platform</div></div></div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">Economic Times ka app — Smart funds recommend karta hai, expense tracker bhi!</div><div style="display:flex;gap:6px;margin-bottom:12px;"><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">🧠 Smart Picks</span><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">💰 Tax Saving</span></div><button class="mf-site-btn" onclick="window.open('https://etmoney.com','_blank')">🔗 Open ET Money</button></div>
+        <div class="mf-site-card"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#065f46,#059669);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">💚</div><div><div style="font-size:15px;font-weight:800;color:white;">AMFI India</div><div style="font-size:10px;color:rgba(255,255,255,0.4);">Official Regulator</div></div></div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">Mutual Fund ki official body! Sab registered funds ki list, NAV, returns — authentic data!</div><div style="display:flex;gap:6px;margin-bottom:12px;"><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">✅ SEBI Approved</span><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">📋 Official NAV</span></div><button class="mf-site-btn" onclick="window.open('https://amfiindia.com','_blank')">🔗 Open AMFI</button></div>
+        <div class="mf-site-card"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#0891b2,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🩵</div><div><div style="font-size:15px;font-weight:800;color:white;">Value Research</div><div style="font-size:10px;color:rgba(255,255,255,0.4);">MF Research & Rating</div></div></div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">India ka best MF research platform! Fund ratings, comparison, portfolio tracker free!</div><div style="display:flex;gap:6px;margin-bottom:12px;"><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">⭐ Fund Ratings</span><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">📊 Comparison</span></div><button class="mf-site-btn" onclick="window.open('https://valueresearchonline.com','_blank')">🔗 Open VRO</button></div>
+        <div class="mf-site-card"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#be185d,#ec4899);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🩷</div><div><div style="font-size:15px;font-weight:800;color:white;">Kuvera</div><div style="font-size:10px;color:rgba(255,255,255,0.4);">Free Direct MF</div></div></div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">100% free direct mutual fund platform. Goal-based investing, family portfolio, FD bhi!</div><div style="display:flex;gap:6px;margin-bottom:12px;"><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">🆓 100% Free</span><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">🎯 Goal Based</span></div><button class="mf-site-btn" onclick="window.open('https://kuvera.in','_blank')">🔗 Open Kuvera</button></div>
+        <div class="mf-site-card"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#d97706,#f59e0b);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🟡</div><div><div style="font-size:15px;font-weight:800;color:white;">Paytm Money</div><div style="font-size:10px;color:rgba(255,255,255,0.4);">MF • NPS • Insurance</div></div></div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">Paytm ka investment platform — Direct MF, NPS, Insurance sab ek jagah!</div><div style="display:flex;gap:6px;margin-bottom:12px;"><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">📱 Easy UPI</span><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">🏦 NPS</span></div><button class="mf-site-btn" onclick="window.open('https://paytmmoney.com','_blank')">🔗 Open Paytm Money</button></div>
+        <div class="mf-site-card"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#5b21b6,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🔮</div><div><div style="font-size:15px;font-weight:800;color:white;">Morningstar</div><div style="font-size:10px;color:rgba(255,255,255,0.4);">Global MF Research</div></div></div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">Global investment research firm — Detailed fund analysis, star ratings, manager info!</div><div style="display:flex;gap:6px;margin-bottom:12px;"><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">🌍 Global Data</span><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">⭐ Star Rating</span></div><button class="mf-site-btn" onclick="window.open('https://morningstar.in','_blank')">🔗 Open Morningstar</button></div>
+        <div class="mf-site-card"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#1d4ed8,#2563eb);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🔵</div><div><div style="font-size:15px;font-weight:800;color:white;">MF Central</div><div style="font-size:10px;color:rgba(255,255,255,0.4);">AMFI + SEBI Portal</div></div></div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">Official govt MF portal — Consolidate all your MF investments, get CAS statement free!</div><div style="display:flex;gap:6px;margin-bottom:12px;"><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">✅ Official</span><span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:100px;padding:3px 10px;font-size:10px;color:#34d399;font-weight:700;">📋 CAS Statement</span></div><button class="mf-site-btn" onclick="window.open('https://mfcentral.com','_blank')">🔗 Open MF Central</button></div>
+      </div>
+    </div>
+
+    <!-- TAB: SIP CALCULATOR -->
+    <div id="mftab-calc" style="display:none;">
+      <div class="mf-sec-title">🧮 SIP Calculator — Apna Return Calculate Karo</div>
+      <div class="mf-calc-wrap">
+        <div class="mf-box">
+          <div style="font-size:15px;font-weight:800;color:#34d399;margin-bottom:16px;">📥 SIP Details</div>
+          <label class="mf-label">Monthly SIP Amount (₹)</label>
+          <input type="number" class="mf-input" id="sipAmt" value="5000" oninput="calcSIP()">
+          <input type="range" class="mf-range" min="500" max="100000" step="500" value="5000" oninput="document.getElementById('sipAmt').value=this.value;calcSIP()">
+          <label class="mf-label">Investment Duration (Years)</label>
+          <input type="number" class="mf-input" id="sipYears" value="10" oninput="calcSIP()">
+          <input type="range" class="mf-range" min="1" max="40" value="10" oninput="document.getElementById('sipYears').value=this.value;calcSIP()">
+          <label class="mf-label">Expected Annual Return (%)</label>
+          <input type="number" class="mf-input" id="sipRate" value="12" oninput="calcSIP()">
+          <input type="range" class="mf-range" min="1" max="30" value="12" oninput="document.getElementById('sipRate').value=this.value;calcSIP()">
+        </div>
+        <div class="mf-box">
+          <div style="font-size:14px;font-weight:800;color:rgba(255,255,255,0.6);margin-bottom:16px;">📊 Aapka Return:</div>
+          <div class="mf-result-item"><div style="font-size:12px;color:rgba(255,255,255,0.5);">💰 Total Invested</div><div style="font-size:18px;font-weight:900;color:#93c5fd;" id="sipTotalInvested">₹6L</div></div>
+          <div class="mf-result-item"><div style="font-size:12px;color:rgba(255,255,255,0.5);">📈 Estimated Returns</div><div style="font-size:18px;font-weight:900;color:#34d399;" id="sipEstReturn">₹5.2L</div></div>
+          <div class="mf-result-item" style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.2);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">🏆 Total Value</div><div style="font-size:22px;font-weight:900;color:#34d399;" id="sipTotalValue">₹11.2L</div></div>
+          <div class="mf-result-item"><div style="font-size:12px;color:rgba(255,255,255,0.5);">📊 Wealth Gained</div><div style="font-size:18px;font-weight:900;color:#fbbf24;" id="sipWealthGained">87%</div></div>
+          <canvas id="sipPieChart" width="200" height="100" style="display:block;margin:10px auto 0;"></canvas>
+          <div style="display:flex;gap:14px;justify-content:center;margin-top:6px;">
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;"><div style="width:10px;height:10px;background:#3b82f6;border-radius:2px;"></div>Invested</div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;"><div style="width:10px;height:10px;background:#34d399;border-radius:2px;"></div>Returns</div>
+          </div>
+        </div>
+      </div>
+      <div class="mf-box">
+        <div style="font-size:14px;font-weight:800;color:rgba(255,255,255,0.6);margin-bottom:14px;">📈 Year-wise Growth</div>
+        <div class="mf-graph-area" id="sipGraphBars"></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0 0;flex-wrap:wrap;" id="sipGraphLabels"></div>
+      </div>
+    </div>
+
+    <!-- TAB: HISTORY -->
+    <div id="mftab-history" style="display:none;">
+      <div class="mf-sec-title">📊 Top Mutual Funds — Historical Returns</div>
+      <div class="mf-history-grid">
+        <div class="mf-history-card"><div style="font-size:14px;font-weight:800;color:white;margin-bottom:12px;">🏆 Mirae Asset Large Cap</div><table class="mf-htable"><tr><th>Period</th><th>Returns</th><th>Category Avg</th></tr><tr><td>1 Year</td><td class="mf-pos">+18.5%</td><td style="color:rgba(255,255,255,0.4);">+15.2%</td></tr><tr><td>3 Years</td><td class="mf-pos">+21.3%</td><td style="color:rgba(255,255,255,0.4);">+17.8%</td></tr><tr><td>5 Years</td><td class="mf-pos">+16.8%</td><td style="color:rgba(255,255,255,0.4);">+13.4%</td></tr><tr><td>10 Years</td><td class="mf-pos">+14.2%</td><td style="color:rgba(255,255,255,0.4);">+11.9%</td></tr></table></div>
+        <div class="mf-history-card"><div style="font-size:14px;font-weight:800;color:white;margin-bottom:12px;">🔥 SBI Small Cap Fund</div><table class="mf-htable"><tr><th>Period</th><th>Returns</th><th>Category Avg</th></tr><tr><td>1 Year</td><td class="mf-pos">+28.4%</td><td style="color:rgba(255,255,255,0.4);">+22.1%</td></tr><tr><td>3 Years</td><td class="mf-pos">+32.1%</td><td style="color:rgba(255,255,255,0.4);">+26.8%</td></tr><tr><td>5 Years</td><td class="mf-pos">+24.6%</td><td style="color:rgba(255,255,255,0.4);">+19.2%</td></tr><tr><td>10 Years</td><td class="mf-pos">+22.8%</td><td style="color:rgba(255,255,255,0.4);">+17.4%</td></tr></table></div>
+        <div class="mf-history-card"><div style="font-size:14px;font-weight:800;color:white;margin-bottom:12px;">💰 HDFC Balanced Advantage</div><table class="mf-htable"><tr><th>Period</th><th>Returns</th><th>Category Avg</th></tr><tr><td>1 Year</td><td class="mf-pos">+14.2%</td><td style="color:rgba(255,255,255,0.4);">+12.8%</td></tr><tr><td>3 Years</td><td class="mf-pos">+17.6%</td><td style="color:rgba(255,255,255,0.4);">+15.1%</td></tr><tr><td>5 Years</td><td class="mf-pos">+13.4%</td><td style="color:rgba(255,255,255,0.4);">+11.8%</td></tr><tr><td>10 Years</td><td class="mf-pos">+12.8%</td><td style="color:rgba(255,255,255,0.4);">+10.2%</td></tr></table></div>
+        <div class="mf-history-card"><div style="font-size:14px;font-weight:800;color:white;margin-bottom:12px;">📈 Axis Bluechip Fund</div><table class="mf-htable"><tr><th>Period</th><th>Returns</th><th>Category Avg</th></tr><tr><td>1 Year</td><td class="mf-pos">+16.8%</td><td style="color:rgba(255,255,255,0.4);">+15.2%</td></tr><tr><td>3 Years</td><td class="mf-pos">+19.4%</td><td style="color:rgba(255,255,255,0.4);">+17.8%</td></tr><tr><td>5 Years</td><td class="mf-pos">+15.2%</td><td style="color:rgba(255,255,255,0.4);">+13.4%</td></tr><tr><td>10 Years</td><td class="mf-pos">+13.6%</td><td style="color:rgba(255,255,255,0.4);">+11.9%</td></tr></table></div>
+      </div>
+      <div class="mf-box">
+        <div style="font-size:14px;font-weight:800;color:rgba(255,255,255,0.6);margin-bottom:14px;">📈 Sensex Historical Returns — 1990 se 2024</div>
+        <div class="mf-graph-area" id="histGraphBars"></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0 0;flex-wrap:wrap;" id="histGraphLabels"></div>
+        <div style="display:flex;gap:14px;margin-top:8px;"><div style="display:flex;align-items:center;gap:5px;font-size:11px;"><div style="width:10px;height:10px;background:#34d399;border-radius:2px;"></div>Positive Year</div><div style="display:flex;align-items:center;gap:5px;font-size:11px;"><div style="width:10px;height:10px;background:#f87171;border-radius:2px;"></div>Negative Year</div></div>
+      </div>
+    </div>
+
+    <!-- TAB: EDUCATION -->
+    <div id="mftab-learn" style="display:none;">
+      <div class="mf-sec-title">📚 Mutual Fund Education — Basics se Advanced</div>
+      <div class="mf-edu-grid">
+        <div class="mf-edu-card"><div style="font-size:36px;margin-bottom:10px;">🤔</div><div style="font-size:14px;font-weight:800;color:white;margin-bottom:6px;">Mutual Fund Kya Hai?</div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">MF ek aisa fund hai jahan bahut saare investors apna paisa daalte hain. Expert fund manager us paisa ko stocks, bonds mein lagata hai.</div><span style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#4ade80;font-weight:700;">🟢 Beginner</span></div>
+        <div class="mf-edu-card"><div style="font-size:36px;margin-bottom:10px;">📱</div><div style="font-size:14px;font-weight:800;color:white;margin-bottom:6px;">SIP Kaise Karte Hain?</div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">SIP = Systematic Investment Plan. Har mahine fixed amount invest karo. ₹500 se shuru kar sakte ho. Groww ya Zerodha pe 10 min mein start!</div><span style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#4ade80;font-weight:700;">🟢 Beginner</span></div>
+        <div class="mf-edu-card"><div style="font-size:36px;margin-bottom:10px;">📊</div><div style="font-size:14px;font-weight:800;color:white;margin-bottom:6px;">Direct vs Regular Plan</div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">Direct plan mein koi agent nahi — aap khud invest karo, zyada return milega. Regular mein agent/broker milta hai par thoda kam return.</div><span style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#4ade80;font-weight:700;">🟢 Beginner</span></div>
+        <div class="mf-edu-card"><div style="font-size:36px;margin-bottom:10px;">⚖️</div><div style="font-size:14px;font-weight:800;color:white;margin-bottom:6px;">Risk vs Return</div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">Equity funds = zyada risk, zyada return (12-18%). Debt funds = kam risk, kam return (6-8%). Hybrid = dono ka mix. Risk ke hisab se chuno!</div><span style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#fbbf24;font-weight:700;">🟡 Intermediate</span></div>
+        <div class="mf-edu-card"><div style="font-size:36px;margin-bottom:10px;">🧮</div><div style="font-size:14px;font-weight:800;color:white;margin-bottom:6px;">NAV Kya Hota Hai?</div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">NAV = Net Asset Value. Ek MF unit ki current price. Jab NAV badhta hai — aapka paisa badha. Daily update hota hai market close ke baad.</div><span style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#fbbf24;font-weight:700;">🟡 Intermediate</span></div>
+        <div class="mf-edu-card"><div style="font-size:36px;margin-bottom:10px;">💸</div><div style="font-size:14px;font-weight:800;color:white;margin-bottom:6px;">Tax on Mutual Funds</div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">Equity MF: 1 saal se kam = 15% STCG, 1 saal se zyada = 10% LTCG (₹1L free). ELSS mein ₹1.5L tak tax save kar sakte ho!</div><span style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#fbbf24;font-weight:700;">🟡 Intermediate</span></div>
+        <div class="mf-edu-card"><div style="font-size:36px;margin-bottom:10px;">🎯</div><div style="font-size:14px;font-weight:800;color:white;margin-bottom:6px;">Goal-Based Investing</div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">Retirement = Large Cap, Child Education = Mid Cap SIP 15yr, Emergency = Liquid Fund, Tax = ELSS. Har goal ke liye alag fund!</div><span style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#f87171;font-weight:700;">🔴 Advanced</span></div>
+        <div class="mf-edu-card"><div style="font-size:36px;margin-bottom:10px;">📉</div><div style="font-size:14px;font-weight:800;color:white;margin-bottom:6px;">Market Girne pe Kya Karein?</div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">Market girne pe SIP band mat karo! Yahi best time hai — units saste milte hain. Rupee Cost Averaging se long term mein faayda hota hai.</div><span style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#f87171;font-weight:700;">🔴 Advanced</span></div>
+        <div class="mf-edu-card"><div style="font-size:36px;margin-bottom:10px;">🏆</div><div style="font-size:14px;font-weight:800;color:white;margin-bottom:6px;">Portfolio Kaise Banayein?</div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px;">70% Large Cap + 20% Mid Cap + 10% Small Cap = Balanced portfolio. Saal mein ek baar rebalance karo. 5+ saal ke liye invest karo.</div><span style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#f87171;font-weight:700;">🔴 Advanced</span></div>
+      </div>
+    </div>
+
+    <!-- TAB: FUND TYPES -->
+    <div id="mftab-types" style="display:none;">
+      <div class="mf-sec-title">🗂️ Mutual Fund Types — Sab Samjho</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;">
+        <div style="background:rgba(59,130,246,0.08);border:1.5px solid rgba(59,130,246,0.25);border-radius:18px;padding:20px;"><div style="font-size:28px;margin-bottom:10px;">📈</div><div style="font-size:15px;font-weight:800;color:white;margin-bottom:8px;">Equity Funds</div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:12px;">Stocks mein invest karta hai. High risk, high return. 5+ saal ke liye best.<br>Types: Large Cap, Mid Cap, Small Cap, Multi Cap, ELSS, Sectoral</div><div style="display:flex;gap:8px;flex-wrap:wrap;"><span style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#f87171;font-weight:700;">⚠️ High Risk</span><span style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#4ade80;font-weight:700;">📈 12-20% Returns</span></div></div>
+        <div style="background:rgba(34,197,94,0.08);border:1.5px solid rgba(34,197,94,0.25);border-radius:18px;padding:20px;"><div style="font-size:28px;margin-bottom:10px;">🏦</div><div style="font-size:15px;font-weight:800;color:white;margin-bottom:8px;">Debt Funds</div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:12px;">Bonds, FD jaisi cheezein. Low risk, stable return. Short term ke liye best.<br>Types: Liquid, Short Duration, Long Duration, Corporate Bond, Gilt</div><div style="display:flex;gap:8px;flex-wrap:wrap;"><span style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#4ade80;font-weight:700;">✅ Low Risk</span><span style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#fbbf24;font-weight:700;">💰 6-8% Returns</span></div></div>
+        <div style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.25);border-radius:18px;padding:20px;"><div style="font-size:28px;margin-bottom:10px;">⚖️</div><div style="font-size:15px;font-weight:800;color:white;margin-bottom:8px;">Hybrid Funds</div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:12px;">Equity + Debt ka mix. Medium risk, medium return. Beginners ke liye best!<br>Types: Balanced Advantage, Aggressive Hybrid, Conservative Hybrid</div><div style="display:flex;gap:8px;flex-wrap:wrap;"><span style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#fbbf24;font-weight:700;">⚡ Medium Risk</span><span style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#4ade80;font-weight:700;">📊 9-13% Returns</span></div></div>
+        <div style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.25);border-radius:18px;padding:20px;"><div style="font-size:28px;margin-bottom:10px;">💎</div><div style="font-size:15px;font-weight:800;color:white;margin-bottom:8px;">Index Funds</div><div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:12px;">Sensex ya Nifty ko follow karta hai. Kam charges, passive investing. Long term best!<br>Types: Nifty 50, Sensex, Nifty Next 50, Nifty Midcap 150</div><div style="display:flex;gap:8px;flex-wrap:wrap;"><span style="background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#c4b5fd;font-weight:700;">💡 Smart Choice</span><span style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:100px;padding:3px 10px;font-size:10px;color:#4ade80;font-weight:700;">📈 12-15% Returns</span></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 </body>
 </html>
