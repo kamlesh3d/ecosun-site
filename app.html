@@ -1,17 +1,763 @@
-{
-  "name": "EcoSun Energy - Solar & Field App",
-  "short_name": "EcoSun Energy",
-  "start_url": "/app.html",
-  "display": "standalone",
-  "background_color": "#064e3b",
-  "theme_color": "#064e3b",
-  "orientation": "portrait",
-  "icons": [
-    {
-      "src": "https://www.ecosunenergy.co.in/logo512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>EcoSun Energy App | MP Field Team & Customer Portal</title>
+  <meta name="theme-color" content="#064e3b" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23064e3b'/><circle cx='50' cy='50' r='26' fill='%23fbbf24'/></svg>" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; padding-bottom: 84px; }
+    .tab-panel { display: none; animation: fadeIn 0.2s ease-in-out; }
+    .tab-panel.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-  ]
-}
+    @keyframes popScale {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .popup-card { animation: popScale 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-amber-50/50 via-slate-100 to-emerald-50/50 text-slate-800 antialiased select-none">
+
+  <!-- TOP APP BAR -->
+  <header class="sticky top-0 z-40 bg-gradient-to-r from-emerald-950 via-teal-900 to-amber-950 text-white px-4 py-3 shadow-md border-b border-amber-400/30">
+    <div class="max-w-lg mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 via-orange-500 to-emerald-500 text-white flex items-center justify-center font-black text-lg shadow">☀️</div>
+        <div>
+          <h1 class="text-base font-black leading-tight bg-gradient-to-r from-white to-amber-200 bg-clip-text text-transparent">EcoSun Energy</h1>
+          <p class="text-[10px] text-amber-300 font-semibold">Indore • Khargone • Ujjain • Khandwa</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <button onclick="openAppSocialPopup()" class="text-[11px] bg-gradient-to-r from-rose-500 to-orange-500 text-white px-2.5 py-1.5 rounded-lg font-extrabold shadow-sm">🌐 Social</button>
+        <a href="index.html" class="text-[11px] bg-emerald-800 hover:bg-emerald-700 px-2.5 py-1.5 rounded-lg font-bold">Web</a>
+        <a href="tel:+919340509033" class="text-[11px] bg-amber-400 text-slate-950 px-2.5 py-1.5 rounded-lg font-extrabold">📞 HQ</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN MOBILE APP CONTAINER -->
+  <main class="max-w-lg mx-auto p-4 space-y-5">
+
+    <!-- TAB 1: HOME (CUSTOMER + YOUTUBE INTRO + QUICK ACTIONS) -->
+    <section id="tab-home" class="tab-panel active space-y-4">
+      <div class="bg-gradient-to-br from-emerald-950 via-teal-900 to-amber-950 text-white rounded-3xl p-5 shadow-xl border border-amber-400/30 space-y-3.5">
+        <div class="flex items-center justify-between gap-2">
+          <span class="inline-block bg-amber-400/20 border border-amber-300/40 text-amber-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase">
+            PM Surya Ghar • ₹78,000 Subsidy
+          </span>
+          <button onclick="openAppSocialPopup()" class="text-[10px] font-extrabold bg-white/15 hover:bg-white/25 px-2.5 py-1 rounded-full text-amber-200">
+            ✨ All Logos & Video
+          </button>
+        </div>
+
+        <h2 class="text-2xl font-black leading-snug">
+          Cut Your Electricity Bill by <span class="bg-gradient-to-r from-amber-300 via-yellow-400 to-orange-400 bg-clip-text text-transparent">90%</span> with EcoSun Energy
+        </h2>
+
+        <!-- OFFICIAL YOUTUBE VIDEO EMBED IN APP INTRO (@EcoSunEnergys) -->
+        <div class="bg-slate-950/75 border border-amber-400/30 rounded-2xl p-2.5 shadow-lg">
+          <div class="flex items-center justify-between mb-1.5 px-0.5">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+              <span class="text-[10px] font-extrabold text-amber-300">YouTube Intro • @EcoSunEnergys</span>
+            </div>
+            <a href="https://www.youtube.com/@EcoSunEnergys" target="_blank" rel="noopener noreferrer" class="bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+              ▶ Subscribe
+            </a>
+          </div>
+          <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-black">
+            <iframe
+              class="w-full h-full"
+              src="https://www.youtube.com/embed/90r79UTtQXM?rel=0"
+              title="EcoSun Energy - घर पर Solar लगवाओ, ₹78,000 तक Subsidy पाओ!"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+
+        <p class="text-xs text-emerald-100 leading-relaxed">
+          MNRE & MPEB Registered Solar EPC across Madhya Pradesh. Track your project, generate instant quotes, or connect directly with our Indore Head Office.
+        </p>
+
+        <div class="grid grid-cols-2 gap-2.5 pt-1">
+          <button onclick="switchTab('calc')" class="bg-gradient-to-r from-amber-400 to-orange-400 text-slate-950 font-extrabold py-2.5 rounded-xl text-xs shadow">
+            ⚡ Subsidy & EMI Calc
+          </button>
+          <button onclick="switchTab('team')" class="bg-white/15 border border-white/30 text-white font-bold py-2.5 rounded-xl text-xs">
+            👷 Field Team Portal
+          </button>
+        </div>
+      </div>
+
+      <!-- Direct Problem / Escalation Card for Customers -->
+      <div class="bg-gradient-to-br from-rose-50 via-white to-amber-50 rounded-3xl p-4 border border-rose-200 shadow-sm space-y-2.5">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-black text-rose-700">🚨 Direct Customer Problem Desk</span>
+          <span class="text-[10px] font-bold bg-rose-100 text-rose-800 px-2 py-0.5 rounded-full">Indore HQ</span>
+        </div>
+        <p class="text-xs text-slate-600">
+          Facing any delay or issue in installation, MPEB meter, or subsidy? Report directly to <strong>Kamlesh Kushwah (Owner)</strong> for immediate resolution.
+        </p>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="switchTab('support')" class="bg-gradient-to-r from-rose-600 to-red-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-sm">
+            📝 Report Issue Now
+          </button>
+          <a href="https://wa.me/919340509033?text=Hello%20Kamlesh%20ji%2C%20I%20need%20direct%20help%20with%20my%20EcoSun%20Energy%20solar%20project." target="_blank" class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold py-2.5 rounded-xl text-xs text-center shadow-sm">
+            💬 Direct WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Popular Solar Plans -->
+      <div class="space-y-2.5">
+        <h3 class="text-sm font-black text-slate-900 px-1">☀️ Popular MP Rooftop Solar Packages</h3>
+        <div class="bg-gradient-to-r from-emerald-50 to-white p-4 rounded-2xl border border-emerald-200 flex items-center justify-between shadow-sm">
+          <div>
+            <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">₹78,000 Subsidy</span>
+            <h4 class="text-base font-black text-slate-900 mt-1">3 kW Home Solar Plant</h4>
+            <p class="text-xs text-slate-600">Saves ~₹3,300/mo • Net Cost ₹1,17,000*</p>
+          </div>
+          <button onclick="prefillQuote('3 kW Residential', 195000, 78000)" class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-extrabold px-3.5 py-2.5 rounded-xl shadow">Quote</button>
+        </div>
+
+        <div class="bg-gradient-to-r from-amber-50 to-white p-4 rounded-2xl border border-amber-200 flex items-center justify-between shadow-sm">
+          <div>
+            <span class="text-[10px] font-bold text-orange-800 bg-amber-100 px-2 py-0.5 rounded-full">₹78,000 Subsidy</span>
+            <h4 class="text-base font-black text-slate-900 mt-1">5 kW AC-Home Solar Plant</h4>
+            <p class="text-xs text-slate-600">Saves ~₹5,500/mo • Net Cost ₹2,12,000*</p>
+          </div>
+          <button onclick="prefillQuote('5 kW Residential', 290000, 78000)" class="bg-gradient-to-r from-amber-500 to-orange-600 text-white text-xs font-extrabold px-3.5 py-2.5 rounded-xl shadow">Quote</button>
+        </div>
+      </div>
+
+      <!-- All 7 Social Media Icon Buttons + Compliance Footer in App -->
+      <div class="bg-white rounded-3xl p-4 border border-slate-200 text-center text-[11px] text-slate-500 space-y-3 shadow-sm">
+        <p class="text-[11px] font-extrabold text-slate-800 uppercase tracking-wider">Connect With EcoSun Energy</p>
+        <div class="flex flex-wrap justify-center gap-2">
+          <a href="https://www.youtube.com/@EcoSunEnergys" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="w-9 h-9 rounded-xl bg-[#FF0000] text-white flex items-center justify-center shadow-sm">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/ecosunenergy.i/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white flex items-center justify-center shadow-sm">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61596518987158" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-9 h-9 rounded-xl bg-[#1877F2] text-white flex items-center justify-center shadow-sm">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/ecosun-energy-indore-ba8b1a451/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="w-9 h-9 rounded-xl bg-[#0A66C2] text-white flex items-center justify-center shadow-sm">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+          </a>
+          <a href="https://x.com/EcoSun_Energy" target="_blank" rel="noopener noreferrer" aria-label="X" class="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-sm">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://www.pinterest.com/EcoSun_Energy/" target="_blank" rel="noopener noreferrer" aria-label="Pinterest" class="w-9 h-9 rounded-xl bg-[#E60023] text-white flex items-center justify-center shadow-sm">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9.04 21.54c.96.29 1.93.46 2.96.46a10 10 0 0 0 10-10A10 10 0 0 0 12 2 10 10 0 0 0 2 12c0 4.25 2.67 7.9 6.44 9.34-.09-.78-.18-2.07 0-2.96l1.15-4.94s-.29-.58-.29-1.5c0-1.38.86-2.41 1.84-2.41.86 0 1.26.63 1.26 1.44 0 .86-.57 2.09-.86 3.27-.17.98.52 1.84 1.52 1.84 1.78 0 3.16-1.9 3.16-4.58 0-2.4-1.72-4.04-4.19-4.04-2.82 0-4.48 2.1-4.48 4.31 0 .86.28 1.73.74 2.3.09.06.09.14.06.29l-.29 1.09c0 .17-.11.23-.28.11-1.28-.56-2.02-2.38-2.02-3.85 0-3.16 2.24-6.03 6.56-6.03 3.44 0 6.12 2.47 6.12 5.75 0 3.44-2.13 6.2-5.18 6.2-.97 0-1.92-.52-2.26-1.13l-.67 2.37c-.23.86-.86 2.01-1.29 2.7v-.03z"/></svg>
+          </a>
+          <a href="https://www.reddit.com/user/EcoSunEnergy/" target="_blank" rel="noopener noreferrer" aria-label="Reddit" class="w-9 h-9 rounded-xl bg-[#FF4500] text-white flex items-center justify-center shadow-sm">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M14.5 15.41c.08.08.08.22 0 .3-.65.65-1.89.7-2.5.7s-1.85-.05-2.5-.7a.21.21 0 0 1 0-.3.21.21 0 0 1 .3 0c.39.39 1.22.53 2.2.53s1.81-.14 2.2-.53a.21.21 0 0 1 .3 0zM9.74 13c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1zm4.52-1c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zM22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10zm-3.87-1.14c-.55 0-1.05.24-1.41.6-.98-.54-2.24-.87-3.62-.93l.87-2.79 2.04.47c0 .55.45 1 1 1s1-.45 1-1-.45-1-1-1c-.38 0-.71.22-.87.54l-2.33-.54a.22.22 0 0 0-.26.15l-.98 3.15c-1.44.05-2.75.38-3.76.93a2 2 0 0 0-1.41-.6 2 2 0 0 0-2 2c0 .77.44 1.44 1.09 1.76-.03.22-.05.44-.05.67 0 2.65 3.14 4.8 7.01 4.8s7.01-2.15 7.01-4.8c0-.23-.02-.45-.06-.67.64-.32 1.08-.99 1.08-1.76a2 2 0 0 0-2-2z"/></svg>
+          </a>
+        </div>
+        <div class="pt-1 border-t border-slate-100 space-y-1">
+          <p class="font-bold text-slate-800">EcoSun Energy • Indore, MP (452005)</p>
+          <p>GSTIN: 23BHAPK0101Q1ZR • <a href="index.html#privacy" class="underline text-emerald-700 font-semibold">Privacy Policy & Terms</a></p>
+          <p class="font-semibold text-slate-700">© 2026 EcoSun Energy. All Rights Reserved.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: SUBSIDY & EMI CALCULATOR -->
+    <section id="tab-calc" class="tab-panel space-y-4">
+      <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-4">
+        <h2 class="text-lg font-black text-slate-900">⚡ PM Surya Ghar & EMI Calculator</h2>
+        <div>
+          <div class="flex justify-between text-sm font-bold mb-1">
+            <span>Select Solar Capacity:</span>
+            <span id="appKwText" class="text-emerald-700 font-black">3 kW</span>
+          </div>
+          <input type="range" id="appKwRange" min="1" max="25" value="3" oninput="calcAppSolar()" class="w-full accent-emerald-600" />
+        </div>
+
+        <div class="bg-emerald-950 text-white rounded-2xl p-4 space-y-2 text-sm">
+          <div class="flex justify-between">
+            <span class="text-emerald-200">Total System Cost:</span>
+            <span id="appGross" class="font-bold">₹1,95,000</span>
+          </div>
+          <div class="flex justify-between text-amber-300">
+            <span>Govt. Subsidy (DBT):</span>
+            <span id="appSub" class="font-black">- ₹78,000</span>
+          </div>
+          <div class="border-t border-emerald-800 pt-2 flex justify-between items-center">
+            <span class="font-bold">Net Customer Cost:</span>
+            <span id="appNet" class="text-xl font-black">₹1,17,000</span>
+          </div>
+          <div class="flex justify-between text-xs text-emerald-300 pt-1">
+            <span>Savings: <strong id="appSave" class="text-white">₹3,300/mo</strong></span>
+            <span>Bank EMI: <strong id="appEmi" class="text-white">₹1,350/mo</strong></span>
+          </div>
+        </div>
+
+        <button onclick="sendCalcToQuote()" class="w-full bg-emerald-600 text-white font-extrabold py-3 rounded-xl text-sm">
+          Create Instant WhatsApp Quotation →
+        </button>
+      </div>
+    </section>
+
+    <!-- TAB 3: INSTANT QUOTATION GENERATOR -->
+    <section id="tab-quote" class="tab-panel space-y-4">
+      <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-3">
+        <h2 class="text-lg font-black text-slate-900">📄 Instant Solar Quotation Maker</h2>
+        <p class="text-xs text-slate-500">Generate an official EcoSun Energy quote & send directly on WhatsApp.</p>
+
+        <input type="text" id="qCustName" placeholder="Customer Name (e.g. Rajesh Patel)" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm" />
+        <div class="grid grid-cols-2 gap-2">
+          <input type="tel" id="qCustPhone" placeholder="Customer Mobile" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm" />
+          <select id="qDistrict" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-sm bg-white">
+            <option value="Indore">Indore</option>
+            <option value="Khargone">Khargone</option>
+            <option value="Ujjain">Ujjain</option>
+            <option value="Khandwa">Khandwa</option>
+            <option value="Dewas">Dewas</option>
+            <option value="Dhar">Dhar</option>
+          </select>
+        </div>
+        <select id="qSize" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm bg-white">
+          <option value="3 kW Residential|195000|78000">3 kW Home Solar (Net ₹1,17,000)</option>
+          <option value="5 kW Residential|290000|78000">5 kW Home Solar (Net ₹2,12,000)</option>
+          <option value="8 kW Residential|450000|78000">8 kW Home Solar (Net ₹3,72,000)</option>
+          <option value="10 kW Commercial|540000|0">10 kW Commercial Solar (₹5,40,000)</option>
+        </select>
+
+        <button onclick="generateQuoteText()" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl text-sm">
+          Generate Quotation Preview
+        </button>
+
+        <textarea id="quoteOutput" rows="7" readonly class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono" placeholder="Your formatted EcoSun Energy quotation will appear here..."></textarea>
+
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="copyQuote()" class="bg-slate-200 text-slate-900 font-bold py-2.5 rounded-xl text-xs">📋 Copy Quote</button>
+          <button onclick="shareQuoteWhatsApp()" class="bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-xs">💬 Share on WhatsApp</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: DISTRICT FIELD TEAM PORTAL (SYNCED LIVE WITH OWNER CRM) -->
+    <section id="tab-team" class="tab-panel space-y-4">
+      <div class="bg-slate-900 text-white rounded-3xl p-5 space-y-2">
+        <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-400">MP Field Team Portal</span>
+        <h2 class="text-lg font-black">Log Customer & District Activity</h2>
+        <p class="text-xs text-slate-300">
+          Team members in <strong>Indore, Khargone, Ujjain, Khandwa, Dewas & Dhar</strong>: add every customer visit or problem here—it syncs live to Head Office!
+        </p>
+      </div>
+
+      <!-- Team Member Add Customer Form -->
+      <form onsubmit="submitFieldTeamCustomer(event)" class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-3">
+        <h3 class="text-sm font-black text-slate-900">+ Add New Customer / Field Update</h3>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">Your Name (Team) *</label>
+            <input type="text" id="ftMemberName" required placeholder="e.g. Rahul Patidar" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">District (जिला) *</label>
+            <select id="ftDistrict" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white">
+              <option value="Indore">Indore</option>
+              <option value="Khargone">Khargone</option>
+              <option value="Ujjain">Ujjain</option>
+              <option value="Khandwa">Khandwa</option>
+              <option value="Dewas">Dewas</option>
+              <option value="Dhar">Dhar</option>
+              <option value="Ratlam">Ratlam</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">Customer Name *</label>
+            <input type="text" id="ftCustName" required placeholder="Customer full name" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">Customer Mobile *</label>
+            <input type="tel" id="ftCustPhone" required pattern="[0-9]{10}" placeholder="10-digit number" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">Plant Size</label>
+            <select id="ftKw" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white">
+              <option value="3 kW Residential">3 kW Home</option>
+              <option value="5 kW Residential">5 kW Home</option>
+              <option value="10 kW Commercial">10 kW Commercial</option>
+              <option value="25+ kW Industrial">25+ kW Industrial</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">Current Status</label>
+            <select id="ftStatus" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white">
+              <option value="Site Survey Done">Site Survey Done</option>
+              <option value="Quotation Given">Quotation Given</option>
+              <option value="Subsidy Applied">Subsidy Applied</option>
+              <option value="Installed & Live">Installed & Live</option>
+              <option value="Issue Reported">Issue Reported (Need HQ Help)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold text-slate-600 mb-1">Activity Note / Any Customer Issue</label>
+          <input type="text" id="ftNote" placeholder="e.g. Roof survey complete, MPEB meter pending..." class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs" />
+        </div>
+
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-3 rounded-xl text-xs shadow">
+          Sync Customer & Activity to Head Office →
+        </button>
+      </form>
+
+      <!-- Live District Feed -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between px-1">
+          <h3 class="text-sm font-black text-slate-900">Recent District Team Activities</h3>
+          <span id="appTotalCount" class="text-xs font-bold text-emerald-700">0 Customers</span>
+        </div>
+        <div id="appActivityFeed" class="space-y-2.5">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: CUSTOMER DIRECT SUPPORT / ISSUE ESCALATION -->
+    <section id="tab-support" class="tab-panel space-y-4">
+      <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-3">
+        <span class="text-[10px] font-extrabold uppercase bg-rose-100 text-rose-800 px-2.5 py-0.5 rounded-full">Direct Owner Escalation</span>
+        <h2 class="text-lg font-black text-slate-900">Solve Your Solar Problem Immediately</h2>
+        <p class="text-xs text-slate-600">
+          Submit your complaint or support request below. It goes directly to <strong>Kamlesh Kushwah (Indore Head Office)</strong> so we can call you back and resolve it quickly.
+        </p>
+
+        <form onsubmit="submitDirectSupport(event)" class="space-y-3">
+          <input type="text" id="supName" required placeholder="Your Name *" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm" />
+          <div class="grid grid-cols-2 gap-2">
+            <input type="tel" id="supPhone" required pattern="[0-9]{10}" placeholder="Mobile Number *" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm" />
+            <select id="supDistrict" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-sm bg-white">
+              <option value="Indore">Indore</option>
+              <option value="Khargone">Khargone</option>
+              <option value="Ujjain">Ujjain</option>
+              <option value="Khandwa">Khandwa</option>
+              <option value="Dewas">Dewas</option>
+              <option value="Dhar">Dhar</option>
+            </select>
+          </div>
+          <textarea id="supProblem" required rows="3" placeholder="Describe your problem (e.g. MPEB meter delay, subsidy status, inverter alert, cleaning)..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm"></textarea>
+          <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-extrabold py-3 rounded-xl text-sm">
+            Send Directly to Head Office →
+          </button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM APP NAVIGATION BAR -->
+  <nav class="fixed bottom-0 inset-x-0 z-40 bg-white border-t border-slate-200 px-2 py-2 shadow-lg">
+    <div class="max-w-lg mx-auto grid grid-cols-5 gap-1 text-center">
+      <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex flex-col items-center py-1 rounded-xl text-emerald-700 font-extrabold">
+        <span class="text-lg">🏠</span>
+        <span class="text-[10px]">Home</span>
+      </button>
+      <button onclick="switchTab('calc')" id="nav-calc" class="nav-btn flex flex-col items-center py-1 rounded-xl text-slate-500 font-semibold">
+        <span class="text-lg">⚡</span>
+        <span class="text-[10px]">Subsidy</span>
+      </button>
+      <button onclick="switchTab('quote')" id="nav-quote" class="nav-btn flex flex-col items-center py-1 rounded-xl text-slate-500 font-semibold">
+        <span class="text-lg">📄</span>
+        <span class="text-[10px]">Quote</span>
+      </button>
+      <button onclick="switchTab('team')" id="nav-team" class="nav-btn flex flex-col items-center py-1 rounded-xl text-slate-500 font-semibold">
+        <span class="text-lg">👷</span>
+        <span class="text-[10px]">Team CRM</span>
+      </button>
+      <button onclick="switchTab('support')" id="nav-support" class="nav-btn flex flex-col items-center py-1 rounded-xl text-slate-500 font-semibold">
+        <span class="text-lg">🛠️</span>
+        <span class="text-[10px]">Support</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- APP TOAST -->
+  <div id="appToast" class="fixed top-16 inset-x-4 max-w-md mx-auto z-50 hidden bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl border border-emerald-500 text-xs font-bold text-center"></div>
+
+  <!-- APP INTRO POPUP WITH YOUTUBE VIDEO & ALL 7 SOCIAL MEDIA LOGOS -->
+  <div id="appSocialIntroModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3">
+    <div class="popup-card bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl border-2 border-amber-400">
+      <div class="bg-gradient-to-r from-emerald-900 via-teal-800 to-amber-700 text-white px-4 py-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center text-lg font-black shadow">☀️</span>
+          <div>
+            <h3 class="text-sm font-black leading-tight">Welcome to EcoSun Energy App</h3>
+            <p class="text-[10px] text-amber-200 font-semibold">Watch Video & Connect on All Social Logos</p>
+          </div>
+        </div>
+        <button onclick="closeAppSocialPopup()" aria-label="Close Popup" class="w-8 h-8 rounded-full bg-white/20 text-white font-black flex items-center justify-center">✕</button>
+      </div>
+
+      <div class="p-4 space-y-3.5">
+        <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black border border-slate-200 shadow">
+          <iframe
+            class="w-full h-full"
+            src="https://www.youtube.com/embed/90r79UTtQXM?rel=0"
+            title="EcoSun Energy Official YouTube Video"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <div>
+          <p class="text-[10px] font-extrabold text-slate-700 text-center uppercase tracking-wider mb-2.5">
+            Official Social Media Channels
+          </p>
+          <div class="grid grid-cols-4 gap-2 text-center">
+            <a href="https://www.youtube.com/@EcoSunEnergys" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-1 p-2 rounded-2xl bg-red-50">
+              <span class="w-9 h-9 rounded-xl bg-[#FF0000] text-white flex items-center justify-center shadow">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+              </span>
+              <span class="text-[10px] font-extrabold text-slate-800">YouTube</span>
+            </a>
+
+            <a href="https://www.instagram.com/ecosunenergy.i/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-1 p-2 rounded-2xl bg-pink-50">
+              <span class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white flex items-center justify-center shadow">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+              </span>
+              <span class="text-[10px] font-extrabold text-slate-800">Instagram</span>
+            </a>
+
+            <a href="https://www.facebook.com/profile.php?id=61596518987158" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-1 p-2 rounded-2xl bg-blue-50">
+              <span class="w-9 h-9 rounded-xl bg-[#1877F2] text-white flex items-center justify-center shadow">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02z"/></svg>
+              </span>
+              <span class="text-[10px] font-extrabold text-slate-800">Facebook</span>
+            </a>
+
+            <a href="https://www.linkedin.com/in/ecosun-energy-indore-ba8b1a451/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-1 p-2 rounded-2xl bg-sky-50">
+              <span class="w-9 h-9 rounded-xl bg-[#0A66C2] text-white flex items-center justify-center shadow">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+              </span>
+              <span class="text-[10px] font-extrabold text-slate-800">LinkedIn</span>
+            </a>
+
+            <a href="https://x.com/EcoSun_Energy" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-1 p-2 rounded-2xl bg-slate-100">
+              <span class="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </span>
+              <span class="text-[10px] font-extrabold text-slate-800">X</span>
+            </a>
+
+            <a href="https://www.pinterest.com/EcoSun_Energy/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-1 p-2 rounded-2xl bg-rose-50">
+              <span class="w-9 h-9 rounded-xl bg-[#E60023] text-white flex items-center justify-center shadow">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9.04 21.54c.96.29 1.93.46 2.96.46a10 10 0 0 0 10-10A10 10 0 0 0 12 2 10 10 0 0 0 2 12c0 4.25 2.67 7.9 6.44 9.34-.09-.78-.18-2.07 0-2.96l1.15-4.94s-.29-.58-.29-1.5c0-1.38.86-2.41 1.84-2.41.86 0 1.26.63 1.26 1.44 0 .86-.57 2.09-.86 3.27-.17.98.52 1.84 1.52 1.84 1.78 0 3.16-1.9 3.16-4.58 0-2.4-1.72-4.04-4.19-4.04-2.82 0-4.48 2.1-4.48 4.31 0 .86.28 1.73.74 2.3.09.06.09.14.06.29l-.29 1.09c0 .17-.11.23-.28.11-1.28-.56-2.02-2.38-2.02-3.85 0-3.16 2.24-6.03 6.56-6.03 3.44 0 6.12 2.47 6.12 5.75 0 3.44-2.13 6.2-5.18 6.2-.97 0-1.92-.52-2.26-1.13l-.67 2.37c-.23.86-.86 2.01-1.29 2.7v-.03z"/></svg>
+              </span>
+              <span class="text-[10px] font-extrabold text-slate-800">Pinterest</span>
+            </a>
+
+            <a href="https://www.reddit.com/user/EcoSunEnergy/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-1 p-2 rounded-2xl bg-orange-50">
+              <span class="w-9 h-9 rounded-xl bg-[#FF4500] text-white flex items-center justify-center shadow">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M14.5 15.41c.08.08.08.22 0 .3-.65.65-1.89.7-2.5.7s-1.85-.05-2.5-.7a.21.21 0 0 1 0-.3.21.21 0 0 1 .3 0c.39.39 1.22.53 2.2.53s1.81-.14 2.2-.53a.21.21 0 0 1 .3 0zM9.74 13c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1zm4.52-1c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zM22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10zm-3.87-1.14c-.55 0-1.05.24-1.41.6-.98-.54-2.24-.87-3.62-.93l.87-2.79 2.04.47c0 .55.45 1 1 1s1-.45 1-1-.45-1-1-1c-.38 0-.71.22-.87.54l-2.33-.54a.22.22 0 0 0-.26.15l-.98 3.15c-1.44.05-2.75.38-3.76.93a2 2 0 0 0-1.41-.6 2 2 0 0 0-2 2c0 .77.44 1.44 1.09 1.76-.03.22-.05.44-.05.67 0 2.65 3.14 4.8 7.01 4.8s7.01-2.15 7.01-4.8c0-.23-.02-.45-.06-.67.64-.32 1.08-.99 1.08-1.76a2 2 0 0 0-2-2z"/></svg>
+              </span>
+              <span class="text-[10px] font-extrabold text-slate-800">Reddit</span>
+            </a>
+
+            <a href="https://wa.me/919340509033?text=Hello%20EcoSun%20Energy%2C%20I%20watched%20your%20app%20video%20and%20want%20₹78%2C000%20subsidy%20details." target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-1 p-2 rounded-2xl bg-emerald-50">
+              <span class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow text-base font-black">
+                💬
+              </span>
+              <span class="text-[10px] font-extrabold text-emerald-900">WhatsApp</span>
+            </a>
+          </div>
+        </div>
+
+        <button onclick="closeAppSocialPopup()" class="w-full bg-slate-900 text-white text-xs font-extrabold py-3 rounded-xl">
+          Continue to EcoSun Energy App →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIREBASE REALTIME SYNC (SHARED WITH WEBSITE OWNER CRM) -->
+  <script type="module">
+    const seedActivity = [
+      { name: "Suresh Verma", phone: "9826011223", district: "Khargone", kw: "3 kW Residential", addedBy: "Rahul Patidar", status: "Subsidy Applied", issue: "Net meter scheduled" },
+      { name: "Mahesh Joshi", phone: "9893044556", district: "Ujjain", kw: "5 kW Residential", addedBy: "Vikram Chouhan", status: "Issue Reported", issue: "MPEB load enhancement help" },
+      { name: "Anil Agrawal", phone: "9425077889", district: "Khandwa", kw: "10 kW Commercial", addedBy: "Deepak Rathore", status: "Site Survey Done", issue: "Quotation approved" }
+    ];
+
+    window.appState = {
+      customers: [...seedActivity],
+      db: null,
+      user: null,
+      appId: typeof __app_id !== "undefined" ? __app_id : "ecosun-energy-mp"
+    };
+
+    async function initAppCloud() {
+      try {
+        if (typeof __firebase_config !== "undefined" && __firebase_config) {
+          const { initializeApp } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js");
+          const { getAuth, signInAnonymously, signInWithCustomToken } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js");
+          const { getFirestore, collection, onSnapshot } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js");
+
+          const app = initializeApp(JSON.parse(__firebase_config));
+          const auth = getAuth(app);
+          const db = getFirestore(app);
+          window.appState.db = db;
+
+          if (typeof __initial_auth_token !== "undefined" && __initial_auth_token) {
+            await signInWithCustomToken(auth, __initial_auth_token);
+          } else {
+            await signInAnonymously(auth);
+          }
+          window.appState.user = auth.currentUser;
+
+          if (window.appState.user) {
+            const leadsRef = collection(db, "artifacts", window.appState.appId, "public", "data", "ecosun_customers");
+            onSnapshot(leadsRef, (snap) => {
+              const cloud = [];
+              snap.forEach((d) => cloud.push({ id: d.id, ...d.data() }));
+              if (cloud.length > 0) {
+                window.appState.customers = [...cloud, ...seedActivity];
+              }
+              if (typeof renderAppActivityFeed === "function") renderAppActivityFeed();
+            }, (err) => console.warn(err.message));
+          }
+        }
+      } catch (e) {
+        console.warn("Offline fallback:", e.message);
+      }
+      if (typeof renderAppActivityFeed === "function") renderAppActivityFeed();
+    }
+
+    window.submitFieldTeamCustomer = async function (e) {
+      e.preventDefault();
+      const member = document.getElementById("ftMemberName").value.trim();
+      const district = document.getElementById("ftDistrict").value;
+      const name = document.getElementById("ftCustName").value.trim();
+      const phone = document.getElementById("ftCustPhone").value.trim();
+      const kw = document.getElementById("ftKw").value;
+      const status = document.getElementById("ftStatus").value;
+      const issue = document.getElementById("ftNote").value.trim() || "Logged via Field App";
+
+      const record = {
+        name,
+        phone,
+        district,
+        kw,
+        addedBy: member,
+        status,
+        issue,
+        createdAt: new Date().toLocaleDateString("en-IN")
+      };
+
+      window.appState.customers.unshift(record);
+      renderAppActivityFeed();
+
+      if (window.appState.db && window.appState.user) {
+        try {
+          const { collection, addDoc, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js");
+          const leadsRef = collection(window.appState.db, "artifacts", window.appState.appId, "public", "data", "ecosun_customers");
+          await addDoc(leadsRef, { ...record, timestamp: serverTimestamp() });
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      e.target.reset();
+      showAppToast(`Synced! ${name} (${district}) is now visible on Head Office CRM.`);
+    };
+
+    window.submitDirectSupport = async function (e) {
+      e.preventDefault();
+      const name = document.getElementById("supName").value.trim();
+      const phone = document.getElementById("supPhone").value.trim();
+      const district = document.getElementById("supDistrict").value;
+      const issue = document.getElementById("supProblem").value.trim();
+
+      const record = {
+        name,
+        phone,
+        district,
+        kw: "Support Escalation",
+        addedBy: "Direct Customer App",
+        status: "Issue Reported",
+        issue,
+        createdAt: new Date().toLocaleDateString("en-IN")
+      };
+
+      window.appState.customers.unshift(record);
+      renderAppActivityFeed();
+
+      if (window.appState.db && window.appState.user) {
+        try {
+          const { collection, addDoc, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js");
+          const leadsRef = collection(window.appState.db, "artifacts", window.appState.appId, "public", "data", "ecosun_customers");
+          await addDoc(leadsRef, { ...record, timestamp: serverTimestamp() });
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      e.target.reset();
+      showAppToast(`Sent to Kamlesh Kushwah (Indore HQ)! We will call you shortly.`);
+    };
+
+    initAppCloud();
+  </script>
+
+  <!-- APP UI FUNCTIONS -->
+  <script>
+    window.appState = window.appState || {
+      customers: [
+        { name: "Suresh Verma", phone: "9826011223", district: "Khargone", kw: "3 kW Residential", addedBy: "Rahul Patidar", status: "Subsidy Applied", issue: "Net meter scheduled" },
+        { name: "Mahesh Joshi", phone: "9893044556", district: "Ujjain", kw: "5 kW Residential", addedBy: "Vikram Chouhan", status: "Issue Reported", issue: "MPEB load enhancement help" },
+        { name: "Anil Agrawal", phone: "9425077889", district: "Khandwa", kw: "10 kW Commercial", addedBy: "Deepak Rathore", status: "Site Survey Done", issue: "Quotation approved" }
+      ]
+    };
+
+    function showAppToast(msg) {
+      const t = document.getElementById("appToast");
+      t.textContent = msg;
+      t.classList.remove("hidden");
+      setTimeout(() => t.classList.add("hidden"), 4000);
+    }
+
+    function openAppSocialPopup() {
+      const el = document.getElementById("appSocialIntroModal");
+      if (el) el.classList.remove("hidden");
+    }
+
+    function closeAppSocialPopup() {
+      const el = document.getElementById("appSocialIntroModal");
+      if (el) el.classList.add("hidden");
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab-panel").forEach((el) => el.classList.remove("active"));
+      document.getElementById("tab-" + tabId).classList.add("active");
+
+      document.querySelectorAll(".nav-btn").forEach((btn) => {
+        btn.classList.remove("text-emerald-700", "font-extrabold");
+        btn.classList.add("text-slate-500", "font-semibold");
+      });
+      const activeNav = document.getElementById("nav-" + tabId);
+      if (activeNav) {
+        activeNav.classList.remove("text-slate-500", "font-semibold");
+        activeNav.classList.add("text-emerald-700", "font-extrabold");
+      }
+    }
+
+    function calcAppSolar() {
+      const kw = parseInt(document.getElementById("appKwRange").value, 10);
+      document.getElementById("appKwText").textContent = kw + " kW";
+      const rate = kw <= 3 ? 65000 : kw <= 10 ? 58000 : 52000;
+      const gross = kw * rate;
+      const sub = kw === 1 ? 30000 : kw === 2 ? 60000 : kw <= 10 ? 78000 : 0;
+      const net = gross - sub;
+      const save = kw * 1100;
+      const emi = Math.round((net * 0.85) / 84);
+
+      document.getElementById("appGross").textContent = "₹" + gross.toLocaleString("en-IN");
+      document.getElementById("appSub").textContent = "- ₹" + sub.toLocaleString("en-IN");
+      document.getElementById("appNet").textContent = "₹" + net.toLocaleString("en-IN");
+      document.getElementById("appSave").textContent = "₹" + save.toLocaleString("en-IN") + "/mo";
+      document.getElementById("appEmi").textContent = "₹" + emi.toLocaleString("en-IN") + "/mo";
+    }
+
+    function prefillQuote(label, gross, sub) {
+      switchTab("quote");
+      generateQuoteText();
+    }
+
+    function sendCalcToQuote() {
+      switchTab("quote");
+      generateQuoteText();
+    }
+
+    function generateQuoteText() {
+      const cust = document.getElementById("qCustName").value.trim() || "Valued Customer";
+      const dist = document.getElementById("qDistrict").value;
+      const [size, grossStr, subStr] = document.getElementById("qSize").value.split("|");
+      const gross = parseInt(grossStr, 10);
+      const sub = parseInt(subStr, 10);
+      const net = gross - sub;
+
+      const text = `*☀️ ECOSUN ENERGY - SOLAR QUOTATION*
+Customer: *${cust}* (${dist}, MP)
+System: *${size}* (ALMM Tier-1 DCR Panels)
+--------------------------------
+Total Plant Cost: ₹${gross.toLocaleString("en-IN")}
+PM Surya Ghar Subsidy: - ₹${sub.toLocaleString("en-IN")}
+*Net Effective Cost: ₹${net.toLocaleString("en-IN")}*
+--------------------------------
+✅ 25 Years Panel Warranty
+✅ Complete MPEB Net-Metering & Subsidy Filing
+Head Office: Indore (452005) | 📞 9340509033`;
+
+      document.getElementById("quoteOutput").value = text;
+    }
+
+    function copyQuote() {
+      const area = document.getElementById("quoteOutput");
+      if (!area.value) generateQuoteText();
+      area.select();
+      document.execCommand("copy");
+      showAppToast("Quotation copied to clipboard!");
+    }
+
+    function shareQuoteWhatsApp() {
+      const area = document.getElementById("quoteOutput");
+      if (!area.value) generateQuoteText();
+      const phone = document.getElementById("qCustPhone").value.trim();
+      const target = phone.length === 10 ? `91${phone}` : "";
+      window.open(`https://wa.me/${target}?text=${encodeURIComponent(area.value)}`, "_blank");
+    }
+
+    function renderAppActivityFeed() {
+      const list = window.appState.customers;
+      document.getElementById("appTotalCount").textContent = list.length + " Customers";
+      const box = document.getElementById("appActivityFeed");
+      box.innerHTML = list.map((c) => {
+        const isIssue = c.status === "Issue Reported";
+        return `
+          <div class="bg-white p-3.5 rounded-2xl border ${isIssue ? "border-rose-300" : "border-slate-200"} space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-black text-slate-900">${c.name} <span class="text-xs font-bold text-emerald-700">(${c.district})</span></span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${isIssue ? "bg-rose-100 text-rose-800" : "bg-emerald-100 text-emerald-800"}">${c.status}</span>
+            </div>
+            <p class="text-xs text-slate-600">${c.kw} • Team: <strong>${c.addedBy}</strong></p>
+            <p class="text-[11px] text-slate-500">Note: ${c.issue}</p>
+            <div class="flex gap-2 pt-1">
+              <a href="tel:+91${c.phone}" class="bg-slate-900 text-white text-[11px] font-bold px-3 py-1 rounded-lg">📞 Call (${c.phone})</a>
+              <a href="https://wa.me/91${c.phone}" target="_blank" class="bg-emerald-600 text-white text-[11px] font-bold px-3 py-1 rounded-lg">💬 WhatsApp</a>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    calcAppSolar();
+    setTimeout(() => {
+      openAppSocialPopup();
+    }, 600);
+  </script>
+</body>
+</html>
