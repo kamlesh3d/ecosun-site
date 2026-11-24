@@ -36,18 +36,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     body { font-family: 'Inter', sans-serif; }
-    .site-page { display: none; animation: fadeIn 0.22s ease-in-out; }
+    .site-page { display: none; animation: fadeIn 0.25s ease-in-out; }
     .site-page.active-page { display: block; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    @keyframes popScale {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .popup-card { animation: popScale 0.28s cubic-bezier(0.16, 1, 0.3, 1); }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen">
+<body class="bg-gradient-to-b from-amber-50/40 via-slate-50 to-emerald-50/40 text-slate-800 antialiased flex flex-col min-h-screen">
 
   <!-- TOP COMPLIANCE & DISTRICT BAR -->
-  <div class="bg-emerald-950 text-emerald-100 text-xs py-2 px-4 border-b border-emerald-800">
+  <div class="bg-gradient-to-r from-emerald-950 via-teal-900 to-amber-950 text-emerald-100 text-xs py-2 px-4 border-b border-amber-500/30">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
       <div class="flex flex-wrap items-center gap-3">
         <span class="font-bold text-amber-400">EcoSun Energy</span>
@@ -57,6 +62,9 @@
         <span class="hidden md:inline">Indore • Khargone • Ujjain • Khandwa • Dewas • Dhar</span>
       </div>
       <div class="flex items-center gap-2 sm:gap-3">
+        <button onclick="openSocialPopup()" class="bg-gradient-to-r from-rose-500 to-orange-500 hover:opacity-90 text-white px-2.5 py-0.5 rounded-full font-bold transition shadow-sm">
+          🌐 Social & Video
+        </button>
         <button onclick="toggleLanguage()" id="langBtn" class="bg-emerald-800 hover:bg-emerald-700 text-white px-2.5 py-0.5 rounded-full font-semibold transition">
           हिंदी में देखें
         </button>
@@ -68,29 +76,29 @@
   </div>
 
   <!-- MAIN MULTI-PAGE NAVBAR -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-amber-200/70 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <!-- Brand Display Name -->
       <button onclick="navigateTo('home')" class="flex items-center gap-2.5 text-left">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white flex items-center justify-center font-black text-xl shadow-md">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 via-orange-500 to-emerald-600 text-white flex items-center justify-center font-black text-xl shadow-md">
           ☀️
         </div>
         <div>
-          <span class="text-xl font-black tracking-tight text-slate-900 block leading-none">EcoSun Energy</span>
+          <span class="text-xl font-black tracking-tight bg-gradient-to-r from-emerald-800 via-teal-700 to-orange-600 bg-clip-text text-transparent block leading-none">EcoSun Energy</span>
           <span class="text-[11px] font-semibold text-emerald-700 tracking-wide">MP Solar EPC & Partner Network</span>
         </div>
       </button>
 
       <!-- Desktop Multi-Page Navigation -->
       <nav class="hidden lg:flex items-center gap-1.5 text-sm font-semibold text-slate-700">
-        <button onclick="navigateTo('home')" data-nav="home" class="nav-link px-3 py-2 rounded-xl bg-emerald-50 text-emerald-700 font-extrabold transition">Home</button>
-        <button onclick="navigateTo('about')" data-nav="about" class="nav-link px-3 py-2 rounded-xl hover:bg-slate-100 transition">About Us</button>
-        <button onclick="navigateTo('products')" data-nav="products" class="nav-link px-3 py-2 rounded-xl hover:bg-slate-100 transition">Products & Plans</button>
-        <button onclick="navigateTo('calculator')" data-nav="calculator" class="nav-link px-3 py-2 rounded-xl hover:bg-slate-100 transition">Subsidy Calc</button>
-        <button onclick="navigateTo('team')" data-nav="team" class="nav-link px-3 py-2 rounded-xl hover:bg-slate-100 transition flex items-center gap-1.5">
+        <button onclick="navigateTo('home')" data-nav="home" class="nav-link px-3 py-2 rounded-xl bg-gradient-to-r from-emerald-50 to-amber-50 text-emerald-800 font-extrabold transition">Home</button>
+        <button onclick="navigateTo('about')" data-nav="about" class="nav-link px-3 py-2 rounded-xl hover:bg-amber-50 transition">About Us</button>
+        <button onclick="navigateTo('products')" data-nav="products" class="nav-link px-3 py-2 rounded-xl hover:bg-amber-50 transition">Products & Plans</button>
+        <button onclick="navigateTo('calculator')" data-nav="calculator" class="nav-link px-3 py-2 rounded-xl hover:bg-amber-50 transition">Subsidy Calc</button>
+        <button onclick="navigateTo('team')" data-nav="team" class="nav-link px-3 py-2 rounded-xl hover:bg-amber-50 transition flex items-center gap-1.5">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> District Team
         </button>
-        <button onclick="navigateTo('contact')" data-nav="contact" class="nav-link px-3 py-2 rounded-xl hover:bg-slate-100 transition">Contact Us</button>
+        <button onclick="navigateTo('contact')" data-nav="contact" class="nav-link px-3 py-2 rounded-xl hover:bg-amber-50 transition">Contact Us</button>
       </nav>
 
       <!-- Action Buttons -->
@@ -98,10 +106,10 @@
         <button onclick="openAdminModal()" class="hidden sm:inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition shadow-sm">
           🔐 Owner CRM
         </button>
-        <button onclick="navigateTo('contact')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl transition shadow-sm">
+        <button onclick="navigateTo('contact')" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl transition shadow-sm">
           Get Quote
         </button>
-        <button onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-xl border border-slate-200 text-slate-700 font-bold">
+        <button onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-xl border border-amber-300 bg-amber-50 text-slate-800 font-bold">
           ☰
         </button>
       </div>
@@ -130,39 +138,65 @@
     <!-- PAGE 1: HOME PAGE                                         -->
     <!-- ========================================================= -->
     <div id="page-home" class="site-page active-page">
-      <section class="relative overflow-hidden bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-900 text-white py-14 sm:py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-10 items-center">
-          <div class="lg:col-span-7 space-y-6">
-            <div class="inline-flex items-center gap-2 bg-emerald-800/80 border border-emerald-600/50 text-emerald-200 text-xs font-bold px-3.5 py-1.5 rounded-full">
+      <section class="relative overflow-hidden bg-gradient-to-br from-emerald-950 via-teal-900 to-amber-950 text-white py-12 sm:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-7 space-y-5">
+            <div class="inline-flex flex-wrap items-center gap-2 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 border border-amber-400/40 text-amber-200 text-xs font-bold px-3.5 py-1.5 rounded-full">
               <span>🇮🇳 MNRE & MPEB Registered Solar EPC</span>
               <span>•</span>
               <span>Indore, MP</span>
             </div>
 
             <h1 id="heroTitle" class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
-              Cut Your Electricity Bill by <span class="text-amber-400">90%</span> with EcoSun Energy
+              Cut Your Electricity Bill by <span class="bg-gradient-to-r from-amber-300 via-yellow-400 to-orange-400 bg-clip-text text-transparent">90%</span> with EcoSun Energy
             </h1>
 
             <p id="heroSubtitle" class="text-emerald-100 text-base sm:text-lg max-w-2xl leading-relaxed">
-              Get up to <strong>₹78,000 Direct Bank Subsidy</strong> under PM Surya Ghar Muft Bijli Yojana. Trusted rooftop solar network across <strong>Indore, Khargone, Ujjain, Khandwa, Dewas & Dhar</strong>.
+              Get up to <strong class="text-amber-300">₹78,000 Direct Bank Subsidy</strong> under PM Surya Ghar Muft Bijli Yojana. Trusted rooftop solar network across <strong>Indore, Khargone, Ujjain, Khandwa, Dewas & Dhar</strong>.
             </p>
 
-            <div class="flex flex-wrap gap-3 pt-2">
-              <button onclick="navigateTo('calculator')" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold px-6 py-3.5 rounded-2xl shadow-lg transition text-sm sm:text-base">
+            <!-- FEATURED YOUTUBE VIDEO INTRO EMBED (@EcoSunEnergys) -->
+            <div class="bg-slate-950/70 border border-amber-400/30 rounded-3xl p-3 sm:p-4 shadow-2xl max-w-xl">
+              <div class="flex items-center justify-between gap-2 mb-2.5 px-1">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+                  <span class="text-xs font-extrabold text-amber-300">Official YouTube Video • @EcoSunEnergys</span>
+                </div>
+                <a href="https://www.youtube.com/@EcoSunEnergys" target="_blank" rel="noopener noreferrer" class="bg-red-600 hover:bg-red-500 text-white text-[11px] font-bold px-2.5 py-1 rounded-full transition">
+                  ▶ Subscribe Channel
+                </a>
+              </div>
+              <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black border border-white/10">
+                <iframe
+                  class="w-full h-full"
+                  src="https://www.youtube.com/embed/90r79UTtQXM?rel=0"
+                  title="EcoSun Energy - घर पर Solar लगवाओ, ₹78,000 तक Subsidy पाओ!"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen>
+                </iframe>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-3 pt-1">
+              <button onclick="navigateTo('calculator')" class="bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-300 hover:to-orange-300 text-slate-950 font-extrabold px-6 py-3.5 rounded-2xl shadow-lg transition text-sm sm:text-base">
                 ⚡ Calculate Subsidy & EMI
               </button>
-              <button onclick="navigateTo('products')" class="bg-white/10 hover:bg-white/20 border border-white/25 text-white font-bold px-6 py-3.5 rounded-2xl transition text-sm sm:text-base">
+              <button onclick="navigateTo('products')" class="bg-white/15 hover:bg-white/25 border border-white/30 text-white font-bold px-6 py-3.5 rounded-2xl transition text-sm sm:text-base">
                 ☀️ Explore Solar Plans
+              </button>
+              <button onclick="openSocialPopup()" class="bg-gradient-to-r from-pink-600 to-rose-600 hover:opacity-90 text-white font-bold px-5 py-3.5 rounded-2xl shadow-lg transition text-sm sm:text-base">
+                🌐 All Social Logos
               </button>
             </div>
 
-            <div class="grid grid-cols-3 gap-4 pt-4 border-t border-emerald-800/80 max-w-lg">
+            <div class="grid grid-cols-3 gap-4 pt-3 border-t border-emerald-800/80 max-w-lg">
               <div>
                 <p class="text-2xl font-black text-amber-400">₹78,000</p>
                 <p class="text-xs text-emerald-200">Max Govt. Subsidy</p>
               </div>
               <div>
-                <p class="text-2xl font-black text-white">25 Yrs</p>
+                <p class="text-2xl font-black text-cyan-300">25 Yrs</p>
                 <p class="text-xs text-emerald-200">Panel Warranty</p>
               </div>
               <div>
@@ -173,13 +207,13 @@
           </div>
 
           <!-- Quick Site Visit Form -->
-          <div class="lg:col-span-5 bg-white text-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl border border-emerald-100">
+          <div class="lg:col-span-5 bg-white text-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-amber-300/60">
             <div class="flex items-center justify-between mb-4">
               <div>
-                <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Direct Head Office Desk</span>
+                <span class="text-xs font-bold uppercase tracking-wider text-orange-600">Direct Head Office Desk</span>
                 <h2 class="text-xl font-black text-slate-900">Book Free Solar Site Survey</h2>
               </div>
-              <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full">Indore HQ</span>
+              <span class="bg-gradient-to-r from-emerald-100 to-amber-100 text-emerald-900 text-xs font-bold px-2.5 py-1 rounded-full">Indore HQ</span>
             </div>
 
             <form onsubmit="submitCustomerLead(event, 'Website Hero')" class="space-y-3.5">
@@ -221,7 +255,7 @@
                   <input type="number" id="heroBill" placeholder="e.g. 3500" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm" />
                 </div>
               </div>
-              <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-3.5 rounded-xl shadow-md transition text-sm">
+              <button type="submit" class="w-full bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:opacity-95 text-white font-extrabold py-3.5 rounded-xl shadow-md transition text-sm">
                 Get Instant Quote & Assign Engineer →
               </button>
             </form>
@@ -229,40 +263,41 @@
         </div>
       </section>
 
-      <!-- Home Page Quick Overview Cards (Navigate to Dedicated Pages) -->
+      <!-- Home Page Quick Overview Cards (Colorful & Vibrant) -->
       <section class="py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <div class="text-center max-w-2xl mx-auto">
+          <span class="inline-block bg-amber-100 text-amber-900 text-xs font-extrabold px-3 py-1 rounded-full mb-2">MP's Trusted Clean Energy Brand</span>
           <h2 class="text-2xl sm:text-3xl font-black text-slate-900">Why Choose EcoSun Energy?</h2>
           <p class="text-slate-600 text-sm mt-2">Explore our dedicated sections for company profile, solar packages, subsidy calculator, and MP district support.</p>
         </div>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          <div onclick="navigateTo('about')" class="cursor-pointer bg-white p-6 rounded-3xl border border-slate-200 hover:border-emerald-500 hover:shadow-md transition space-y-2">
-            <div class="text-3xl">🏢</div>
+          <div onclick="navigateTo('about')" class="cursor-pointer bg-gradient-to-br from-emerald-50 to-teal-100/70 p-6 rounded-3xl border border-emerald-200 hover:border-emerald-500 hover:shadow-lg transition space-y-2">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-2xl shadow">🏢</div>
             <h3 class="font-black text-slate-900">About EcoSun Energy</h3>
-            <p class="text-xs text-slate-600">Learn about our Indore Head Office, GST registration, MNRE & MPEB credentials.</p>
-            <span class="inline-block text-xs font-bold text-emerald-700 pt-1">Read About Us →</span>
+            <p class="text-xs text-slate-700">Learn about our Indore Head Office, GST registration, MNRE & MPEB credentials.</p>
+            <span class="inline-block text-xs font-extrabold text-emerald-800 pt-1">Read About Us →</span>
           </div>
 
-          <div onclick="navigateTo('products')" class="cursor-pointer bg-white p-6 rounded-3xl border border-slate-200 hover:border-emerald-500 hover:shadow-md transition space-y-2">
-            <div class="text-3xl">☀️</div>
+          <div onclick="navigateTo('products')" class="cursor-pointer bg-gradient-to-br from-amber-50 to-orange-100/70 p-6 rounded-3xl border border-amber-200 hover:border-orange-500 hover:shadow-lg transition space-y-2">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center text-2xl shadow">☀️</div>
             <h3 class="font-black text-slate-900">Solar Plants & Products</h3>
-            <p class="text-xs text-slate-600">3 kW, 5 kW, Hybrid Lithium systems, Solar Water Heaters & Street Lights.</p>
-            <span class="inline-block text-xs font-bold text-emerald-700 pt-1">View All Products →</span>
+            <p class="text-xs text-slate-700">3 kW, 5 kW, Hybrid Lithium systems, Solar Water Heaters & Street Lights.</p>
+            <span class="inline-block text-xs font-extrabold text-orange-800 pt-1">View All Products →</span>
           </div>
 
-          <div onclick="navigateTo('calculator')" class="cursor-pointer bg-white p-6 rounded-3xl border border-slate-200 hover:border-emerald-500 hover:shadow-md transition space-y-2">
-            <div class="text-3xl">⚡</div>
+          <div onclick="navigateTo('calculator')" class="cursor-pointer bg-gradient-to-br from-sky-50 to-indigo-100/70 p-6 rounded-3xl border border-sky-200 hover:border-indigo-500 hover:shadow-lg transition space-y-2">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-500 to-indigo-600 text-white flex items-center justify-center text-2xl shadow">⚡</div>
             <h3 class="font-black text-slate-900">Subsidy & Tax Calc</h3>
-            <p class="text-xs text-slate-600">Calculate PM Surya Ghar ₹78,000 subsidy, RWA society & 40% industrial tax savings.</p>
-            <span class="inline-block text-xs font-bold text-emerald-700 pt-1">Open Calculator →</span>
+            <p class="text-xs text-slate-700">Calculate PM Surya Ghar ₹78,000 subsidy, RWA society & 40% industrial tax savings.</p>
+            <span class="inline-block text-xs font-extrabold text-indigo-800 pt-1">Open Calculator →</span>
           </div>
 
-          <div onclick="navigateTo('team')" class="cursor-pointer bg-white p-6 rounded-3xl border border-slate-200 hover:border-emerald-500 hover:shadow-md transition space-y-2">
-            <div class="text-3xl">👷</div>
+          <div onclick="navigateTo('team')" class="cursor-pointer bg-gradient-to-br from-rose-50 to-purple-100/70 p-6 rounded-3xl border border-rose-200 hover:border-purple-500 hover:shadow-lg transition space-y-2">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-rose-500 to-purple-600 text-white flex items-center justify-center text-2xl shadow">👷</div>
             <h3 class="font-black text-slate-900">MP District Network</h3>
-            <p class="text-xs text-slate-600">Live field teams in Indore, Khargone, Ujjain, Khandwa & direct HQ support.</p>
-            <span class="inline-block text-xs font-bold text-emerald-700 pt-1">View District Team →</span>
+            <p class="text-xs text-slate-700">Live field teams in Indore, Khargone, Ujjain, Khandwa & direct HQ support.</p>
+            <span class="inline-block text-xs font-extrabold text-purple-800 pt-1">View District Team →</span>
           </div>
         </div>
       </section>
@@ -832,6 +867,103 @@
 
   <!-- NOTIFICATION TOAST -->
   <div id="toastBox" class="fixed bottom-5 right-5 z-50 hidden max-w-sm bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-emerald-500 text-xs sm:text-sm font-semibold"></div>
+
+  <!-- INTRO POPUP MODAL WITH ALL SOCIAL MEDIA LOGOS & YOUTUBE VIDEO -->
+  <div id="socialIntroModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5">
+    <div class="popup-card bg-white rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl border-2 border-amber-400">
+      <!-- Colorful Header -->
+      <div class="bg-gradient-to-r from-emerald-900 via-teal-800 to-amber-700 text-white px-5 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span class="w-9 h-9 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center text-xl font-black shadow">☀️</span>
+          <div>
+            <h3 class="text-base sm:text-lg font-black leading-tight">Welcome to EcoSun Energy</h3>
+            <p class="text-[11px] text-amber-200 font-semibold">Watch Video & Connect on All Official Channels</p>
+          </div>
+        </div>
+        <button onclick="closeSocialPopup()" aria-label="Close Popup" class="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 text-white font-black flex items-center justify-center">✕</button>
+      </div>
+
+      <div class="p-5 space-y-4">
+        <!-- Mini YouTube Intro Video Inside Popup -->
+        <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black border border-slate-200 shadow-md">
+          <iframe
+            class="w-full h-full"
+            src="https://www.youtube.com/embed/90r79UTtQXM?rel=0"
+            title="EcoSun Energy Official YouTube Video"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <!-- All 7 Official Social Media Logos Grid -->
+        <div>
+          <p class="text-xs font-extrabold text-slate-700 text-center uppercase tracking-wider mb-3">
+            Follow & Subscribe EcoSun Energy Official Pages
+          </p>
+          <div class="grid grid-cols-4 sm:grid-cols-7 gap-2.5 text-center">
+            <a href="https://www.youtube.com/@EcoSunEnergys" target="_blank" rel="noopener noreferrer" class="group flex flex-col items-center gap-1 p-2 rounded-2xl bg-red-50 hover:bg-red-600 transition">
+              <span class="w-10 h-10 rounded-xl bg-[#FF0000] text-white flex items-center justify-center shadow group-hover:scale-105 transition">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+              </span>
+              <span class="text-[10px] font-extrabold text-slate-800 group-hover:text-white">YouTube</span>
+            </a>
+
+            <a href="https://www.instagram.com/ecosunenergy.i/" target="_blank" rel="noopener noreferrer" class="group flex flex-col items-center gap-1 p-2 rounded-2xl bg-pink-50 hover:bg-pink-600 transition">
+              <span class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white flex items-center justify-center shadow group-hover:scale-105 transition">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+              </span>
+              <span class="text-[10px] font-extrabold text-slate-800 group-hover:text-white">Instagram</span>
+            </a>
+
+            <a href="https://www.facebook.com/profile.php?id=61596518987158" target="_blank" rel="noopener noreferrer" class="group flex flex-col items-center gap-1 p-2 rounded-2xl bg-blue-50 hover:bg-[#1877F2] transition">
+              <span class="w-10 h-10 rounded-xl bg-[#1877F2] text-white flex items-center justify-center shadow group-hover:scale-105 transition">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02z"/></svg>
+              </span>
+              <span class="text-[10px] font-extrabold text-slate-800 group-hover:text-white">Facebook</span>
+            </a>
+
+            <a href="https://www.linkedin.com/in/ecosun-energy-indore-ba8b1a451/" target="_blank" rel="noopener noreferrer" class="group flex flex-col items-center gap-1 p-2 rounded-2xl bg-sky-50 hover:bg-[#0A66C2] transition">
+              <span class="w-10 h-10 rounded-xl bg-[#0A66C2] text-white flex items-center justify-center shadow group-hover:scale-105 transition">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+              </span>
+              <span class="text-[10px] font-extrabold text-slate-800 group-hover:text-white">LinkedIn</span>
+            </a>
+
+            <a href="https://x.com/EcoSun_Energy" target="_blank" rel="noopener noreferrer" class="group flex flex-col items-center gap-1 p-2 rounded-2xl bg-slate-100 hover:bg-slate-900 transition">
+              <span class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow group-hover:scale-105 transition">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </span>
+              <span class="text-[10px] font-extrabold text-slate-800 group-hover:text-white">X</span>
+            </a>
+
+            <a href="https://www.pinterest.com/EcoSun_Energy/" target="_blank" rel="noopener noreferrer" class="group flex flex-col items-center gap-1 p-2 rounded-2xl bg-rose-50 hover:bg-[#E60023] transition">
+              <span class="w-10 h-10 rounded-xl bg-[#E60023] text-white flex items-center justify-center shadow group-hover:scale-105 transition">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M9.04 21.54c.96.29 1.93.46 2.96.46a10 10 0 0 0 10-10A10 10 0 0 0 12 2 10 10 0 0 0 2 12c0 4.25 2.67 7.9 6.44 9.34-.09-.78-.18-2.07 0-2.96l1.15-4.94s-.29-.58-.29-1.5c0-1.38.86-2.41 1.84-2.41.86 0 1.26.63 1.26 1.44 0 .86-.57 2.09-.86 3.27-.17.98.52 1.84 1.52 1.84 1.78 0 3.16-1.9 3.16-4.58 0-2.4-1.72-4.04-4.19-4.04-2.82 0-4.48 2.1-4.48 4.31 0 .86.28 1.73.74 2.3.09.06.09.14.06.29l-.29 1.09c0 .17-.11.23-.28.11-1.28-.56-2.02-2.38-2.02-3.85 0-3.16 2.24-6.03 6.56-6.03 3.44 0 6.12 2.47 6.12 5.75 0 3.44-2.13 6.2-5.18 6.2-.97 0-1.92-.52-2.26-1.13l-.67 2.37c-.23.86-.86 2.01-1.29 2.7v-.03z"/></svg>
+              </span>
+              <span class="text-[10px] font-extrabold text-slate-800 group-hover:text-white">Pinterest</span>
+            </a>
+
+            <a href="https://www.reddit.com/user/EcoSunEnergy/" target="_blank" rel="noopener noreferrer" class="group flex flex-col items-center gap-1 p-2 rounded-2xl bg-orange-50 hover:bg-[#FF4500] transition">
+              <span class="w-10 h-10 rounded-xl bg-[#FF4500] text-white flex items-center justify-center shadow group-hover:scale-105 transition">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M14.5 15.41c.08.08.08.22 0 .3-.65.65-1.89.7-2.5.7s-1.85-.05-2.5-.7a.21.21 0 0 1 0-.3.21.21 0 0 1 .3 0c.39.39 1.22.53 2.2.53s1.81-.14 2.2-.53a.21.21 0 0 1 .3 0zM9.74 13c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1zm4.52-1c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zM22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10zm-3.87-1.14c-.55 0-1.05.24-1.41.6-.98-.54-2.24-.87-3.62-.93l.87-2.79 2.04.47c0 .55.45 1 1 1s1-.45 1-1-.45-1-1-1c-.38 0-.71.22-.87.54l-2.33-.54a.22.22 0 0 0-.26.15l-.98 3.15c-1.44.05-2.75.38-3.76.93a2 2 0 0 0-1.41-.6 2 2 0 0 0-2 2c0 .77.44 1.44 1.09 1.76-.03.22-.05.44-.05.67 0 2.65 3.14 4.8 7.01 4.8s7.01-2.15 7.01-4.8c0-.23-.02-.45-.06-.67.64-.32 1.08-.99 1.08-1.76a2 2 0 0 0-2-2z"/></svg>
+              </span>
+              <span class="text-[10px] font-extrabold text-slate-800 group-hover:text-white">Reddit</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="flex gap-2.5 pt-1">
+          <a href="https://wa.me/919340509033?text=Hello%20EcoSun%20Energy%2C%20I%20watched%20your%20video%20and%20want%20₹78%2C000%20solar%20subsidy%20details." target="_blank" class="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-extrabold py-3 rounded-xl text-center shadow">
+            💬 Chat on WhatsApp
+          </a>
+          <button onclick="closeSocialPopup()" class="px-5 bg-slate-900 text-white text-xs font-bold py-3 rounded-xl">
+            Continue to Website →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- POLICY MODAL -->
   <div id="policyModal" class="fixed inset-0 z-50 hidden bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
@@ -1431,11 +1563,26 @@
       document.getElementById("policyModal").classList.add("hidden");
     }
 
+    function openSocialPopup() {
+      const popup = document.getElementById("socialIntroModal");
+      if (popup) popup.classList.remove("hidden");
+    }
+
+    function closeSocialPopup() {
+      const popup = document.getElementById("socialIntroModal");
+      if (popup) popup.classList.add("hidden");
+    }
+
     // Initialize initial UI values & hash routing
     updateSolarCalc();
     renderDistrictSummary();
     const initialHash = window.location.hash.replace("#", "");
     if (initialHash) navigateTo(initialHash);
+
+    // Show Intro Popup with YouTube Video & All Social Logos automatically on load
+    setTimeout(() => {
+      openSocialPopup();
+    }, 600);
   </script>
 </body>
 </html>
